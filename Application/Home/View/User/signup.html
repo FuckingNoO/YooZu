@@ -1,0 +1,51 @@
+<extend name="Common@Base/base"/>
+<block name="title"><title>Welcome</title></block>
+<block name="content">
+	<div class="container-fluid">
+	        <div id="">
+	        	<div class="row">
+	        		<h1>Welcome,myfriend!:D</h1>
+	        	</div>
+	        </div>
+            <div id="register-content">	 	
+        	<div class="row">
+        	<div class="form  col-sm-6 col-sm-offset-3 col-md-offset-3 col-md-6">
+        			<div class="form-group form-group-lg">
+        				<input type="text"  name="username" id="username" class="form-control fo" placeholder="Username">
+        			</div>
+                    <div class="form-group form-group-lg">
+        				<input type="password" name="userpwd" id="userpwd" class="form-control" placeholder="password" >
+        			</div>
+        			<div class="form-group form-group-lg">
+        				<input type="password" name="repassword" id="repassword" class="form-control" placeholder="password_confirm" >
+        			</div>
+        			<div class="form-group form-group-lg">
+        				<input type="email" name="email" id="email" class="form-control" placeholder="e-mail address" >
+        			</div>
+        			<button type="button" class="btn btn-default pull-right" id="register_btn">Submit</button>
+        	</div>
+          </div>	
+        </div>
+</block>
+<block name="script">
+<script>
+$(document).ready(function(){ $("#register_btn").click( function(){
+	    var Url='__URL__/register_user';
+	    var post_data={
+	    	username:$("#username").val(),
+	    	userpwd:$("#userpwd").val(),
+	    	repassword:$("#repassword").val(),
+	    	email:$("#email").val(),
+	    };
+		$.post(Url,post_data,success);
+		function success(data){
+			alert(data);
+		}
+	  });
+	});
+</script>
+</block>
+
+
+
+

@@ -1,0 +1,58 @@
+<extend name="Common@Base/base"/>
+<block name="title"><title>Welcome! My friend</title></block>
+<block name="content">
+	<div class="container-fluid">
+	        <div id="">
+	        	<div class="row">
+	        		<h1>Welcome,myfriend!:D</h1>
+	        	</div>
+	        </div>
+            <div id="login-content">	 	
+        	<div class="row">
+        	<div class="form  col-sm-6 col-sm-offset-3 col-md-offset-3 col-md-6">
+        			<div class="form-group form-group-lg">
+        				<input type="text"  name="username" id="username" class="form-control " placeholder="Username">
+        			</div>
+                    <div class="form-group form-group-lg">
+        				<input type="password" name="userpwd" id="userpwd" class="form-control" placeholder="password" >
+        			</div>
+        			<div class="form-group form-group-lg">
+                      <input type="text" name="login_captcha" id="login_captcha" class="form-control" placeholder="captcha" aria-describedby="basic-addon3">
+                    </div>
+                    <a class="btn btn-link pull-right" href="{:U('User/getpwd')}">忘记密码？</a>
+                    <button type="button" class="btn btn-default pull-right" id="login_btn">Login</button>
+                   <img  src="{:U('Home/User/create_vf',array())}" id="captcha" class="pull-left"/>
+                   <a href="javascript:void(0)" class="pull-left" id="refresh_captcha">看不清？</a>
+            </div>
+        	</div>
+          </div>	
+        </div>
+</block>
+    <block name="script">
+    <script>
+	$(document).ready(function(){ 
+		$("#login_btn").click(function(){
+	    var Url='__URL__/login_user';
+	    var post_data={
+	    	username:$("#username").val(),
+	    	userpwd:$("#userpwd").val(),
+	    	login_captcha:$("#login_captcha").val(),
+	    };
+		$.post(Url,post_data,success);
+		function success(data){
+			if(data=='1')
+			window.location.href="{:U('Usercenter/Public/userfp')}";
+			else
+			alert(data);
+		}
+		});
+		$("#refresh_captcha").click(function(){ 
+        	var verifyurl=$("#captcha").attr("src");
+        	if( verifyurl.indexOf('?')>0){  
+              $("#captcha").attr("src",verifyurl+'&random='+Math.random());  
+            }
+              $("#captcha").attr("src",verifyurl.replace(/\?.*$/,'')+'?'+Math.random());     
+        	});
+	  });
+	</script>
+</block>

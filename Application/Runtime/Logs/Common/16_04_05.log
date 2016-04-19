@@ -1,0 +1,18 @@
+[ 2016-04-05T16:59:03+08:00 ] 127.0.0.1 /thinkphp_3.2.3_full/index.php/thinkphp_3.2.3_full/index.php/Home/Userfp/Userfp.html.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+ERR: 无法加载模块:Thinkphp_3.2.3_full
+
+[ 2016-04-05T16:59:36+08:00 ] 127.0.0.1 /thinkphp_3.2.3_full/index.php/thinkphp_3.2.3_full/index.php/Home/Userfp/Userfp.html.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+ERR: 无法加载模块:Thinkphp_3.2.3_full
+
+[ 2016-04-05T17:01:03+08:00 ] 127.0.0.1 /thinkphp_3.2.3_full/index.php/thinkphp_3.2.3_full/index.php/Home/Index/Userfp.html.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+ERR: 无法加载模块:Thinkphp_3.2.3_full
+
