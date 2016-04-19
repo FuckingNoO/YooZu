@@ -6,17 +6,43 @@
 
 <!-- jQueryLib -->
 <!--[if gte IE 9]><!-->
-<script type="text/javascript" src="/YooZu/Public/static/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="/xiangmu/YooZu/Public/static/jquery-2.0.3.min.js"></script>
 <!--<!--[endif]-->
 <!--[if lt IE 9]><!-->
-<script type="text/javascript" src="/YooZu/Public/static/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/xiangmu/YooZu/Public/static/jquery-1.10.2.min.js"></script>
 <!--<![endif]-->
 
-<!--Bootstrap-->
-<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- 增强IE兼容性 -->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]><!-->
+<script src="/xiangmu/YooZu/Public/static/bootstrap/js/html5shiv.js"></script>
+<script src="/xiangmu/YooZu/Public/static/bootstrap/js/respond.js"></script>
+<!--<!--[endif]-->
+
+<!-- 为了让html5shiv生效，请将所有的CSS都添加到此处 -->
+<link type="text/css" rel="stylesheet" href="/xiangmu/YooZu/Public/static/bootstrap/css/bootstrap.min.css"/>
 	
-<!--other lib-->
+<!--Bootstrap Lib js-->
+<script src="/xiangmu/YooZu/Public/static/bootstrap/js/bootstrap.min.js"></script>
+
+	
+<!--other Lib
+
+<script>
+    //全局内容的定义
+    var _ROOT_ = "/xiangmu/YooZu";
+    var MID = "<?php echo is_login();?>";
+    var MODULE_NAME="<?php echo MODULE_NAME; ?>";
+</script>	-->
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 <title>Welcome</title>
 </head>
@@ -114,7 +140,7 @@
 
 <script>
 $(document).ready(function(){ $("#register_btn").click( function(){
-	    var Url='/YooZu/index.php/Home/User/register_user';
+	    var Url='/xiangmu/YooZu/index.php/Home/User/register_user';
 	    var post_data={
 	    	username:$("#username").val(),
 	    	userpwd:$("#userpwd").val(),
