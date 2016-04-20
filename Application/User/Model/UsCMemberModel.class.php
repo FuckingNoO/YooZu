@@ -11,34 +11,34 @@ class UsCMemberModel extends Model{
 	/* 用户模型自动验证 */
 	protected $_validate = array(
 		/* 验证用户名 */
-		array('username', '1,20', -1, self::EXISTS_VALIDATE, 'length'), //用户名长度不合法
-		array('username', 'checkDenyMember', -2, self::EXISTS_VALIDATE, 'callback'), //用户名禁止注册
-        array('username', 'checkUsername', -2, self::EXISTS_VALIDATE, 'callback'),
-		array('username', '', -3, self::EXISTS_VALIDATE, 'unique'), //用户名被占用
+		array('username', '1,20',"username is too long", self::EXISTS_VALIDATE, 'length'), //用户名长度不合法
+		array('username', 'checkDenyMember', "this username is not allowed!", self::EXISTS_VALIDATE, 'callback'), //用户名禁止注册
+        array('username', 'checkUsername', "this username is not allowed!", self::EXISTS_VALIDATE, 'callback'),
+		array('username', '', "this username already exists!", self::EXISTS_VALIDATE, 'unique'), //用户名被占用
 
 		/* 验证密码 */
-		array('userpwd', '6,30', -4, self::EXISTS_VALIDATE, 'length'), //密码长度不合法
-		array('repassword','userpwd','确认密码不正确',0,'confirm',1), // 验证确认密码是否和密码一致
+		array('userpwd', '6,30', "the password length is not valid!", self::EXISTS_VALIDATE, 'length'), //密码长度不合法
+		array('repassword','userpwd','the repassword is invalid!',0,'confirm',1), // 验证确认密码是否和密码一致
 
 		/* 验证邮箱 */
-		array('email', 'email', -5, self::EXISTS_VALIDATE), //邮箱格式不正确
-		array('email', '1,32', -6, self::EXISTS_VALIDATE, 'length'), //邮箱长度不合法
-		array('email', 'checkDenyEmail', -7, self::EXISTS_VALIDATE, 'callback'), //邮箱禁止注册
-		array('email', '', -8, self::EXISTS_VALIDATE, 'unique'), //邮箱被占用
+		array('email', 'email', "the email format is invalid!", self::EXISTS_VALIDATE), //邮箱格式不正确
+		array('email', '1,32', "the email length is invalid!", self::EXISTS_VALIDATE, 'length'), //邮箱长度不合法
+		array('email', 'checkDenyEmail', "the email is banned!", self::EXISTS_VALIDATE, 'callback'), //邮箱禁止注册
+		//array('email', '', "this email address already exists!", self::EXISTS_VALIDATE, 'unique'), //邮箱被占用
 		
 		/* 验证手机号码 
 		array('mobile', '//', -9, self::EXISTS_VALIDATE), //手机格式不正确 TODO:
 		array('mobile', 'checkDenyMobile', -10, self::EXISTS_VALIDATE, 'callback'), //手机禁止注册
 		array('mobile', '', -11, self::EXISTS_VALIDATE, 'unique'), //手机号被占用*/
 	);
-		/* 用户模型自动完成 
+		/* 用户模型自动完成 */
 	protected $_auto = array(
-		array('password', 'think_ucenter_md5', self::MODEL_BOTH, 'function', UC_AUTH_KEY),
+		array('userpwd', 'think_ucenter_md5', self::MODEL_BOTH, 'function', UC_AUTH_KEY),
 		array('reg_time', NOW_TIME, self::MODEL_INSERT),
 		array('reg_ip', 'get_client_ip', self::MODEL_INSERT, 'function', 1),
 		array('update_time', NOW_TIME),
 		array('status', 'getStatus', self::MODEL_BOTH, 'callback'),
-	);*/
+	);
 	
 		/**
 	 * 检测用户名是不是被禁止注册
@@ -54,7 +54,7 @@ class UsCMemberModel extends Model{
 	 * @param  string $email 邮箱
 	 * @return boolean       ture - 未禁用，false - 禁止注册
 	 */
-	protected function checkDenyEmail($email){
+	protected function checkDenyEmail($emailn ){
 		return true; 
 	}
 
@@ -74,6 +74,14 @@ class UsCMemberModel extends Model{
 	protected function checkDenyMobile($mobile){
 		return true;
 	}	
+	
+	/**
+	 * 根据配置指定用户状态
+	 * @return integer 用户状态
+	 */
+	protected function getStatus(){
+		return true; //TODO: 暂不限制，下一个版本完善
+	}
 	
 	/**
 	 * 注册一个新用户
@@ -133,7 +141,7 @@ class UsCMemberModel extends Model{
 		$user = $this->where($map)->find();
 		if(is_array($user) && $user['status']){
 			/* 验证用户密码 */
-			if(think_ucenter_md5($password, UC_AUTH_KEY) === $user['password']){
+			if(think_ucenter_md5($password, UC_AUTH_KEY) === $user['userpwd']){
 				$this->updateLogin($user['id']); //更新用户登录信息
 				return $user['id']; //登录成功，返回用户ID
 			} else {
@@ -322,4 +330,149 @@ class UsCMemberModel extends Model{
 		return false;
 	}
 	
+	 /**
+     * 注销当前用户
+     * @return void
+     */
+    public function logout()
+    {
+        session('user_auth', null);
+        session('user_auth_sign', null);
+        cookie('OX_LOGGED_USER', NULL);
+    }
+	
+	 /**
+     * 自动登录用户
+     * @param  integer $user 用户信息数组
+     */
+    private function autoLogin($user, $remember = false){
+    	 /* 更新登录信息 */
+        $data = array(
+            'uid' => $user['uid'],
+            'login' => array('exp', '`login`+1'),
+            'last_login_time' => NOW_TIME,
+            'last_login_ip' => get_client_ip(1),
+        );
+        $this->save($data);
+
+        /* 记录登录SESSION和COOKIES */
+        $auth = array(
+            'uid' => $user['uid'],
+            'username' => get_username($user['uid']),
+            'last_login_time' => $user['last_login_time'],
+        );
+
+        session('user_auth', $auth);
+        session('user_auth_sign', data_auth_sign($auth));
+
+        if ($remember) {
+            $token = build_auth_key();
+            $user1 = D('user_token')->where('uid=' . $user['uid'])->find();
+            $data['token'] = $token;
+            $data['time'] = time();
+            if ($user1 == null) {
+                $data['uid'] = $user['uid'];
+                D('user_token')->add($data);
+            } else {
+                D('user_token')->where('uid=' . $user['uid'])->save($data);
+            }
+        }
+
+        if (!$this->getCookieUid() && $remember) {
+            $expire = 3600 * 24 * 7;
+            cookie('OX_LOGGED_USER', $this->jiami($this->change() . ".{$user['uid']}.{$token}"), $expire);
+	}
+	}
+	
+	public function need_login(){
+        if ($uid = $this->getCookieUid()) {
+            $this->login($uid);
+            return true;
+        }
+    }
+     
+	//获取cookieid
+    public function getCookieUid()
+    {
+        static $cookie_uid = null;
+        if (isset($cookie_uid) && $cookie_uid !== null) {
+            return $cookie_uid;
+        }
+        $cookie = cookie('OX_LOGGED_USER');
+        $cookie = explode(".", $this->jiemi($cookie));
+        $map['uid'] = $cookie[1];
+        $user = D('user_token')->where($map)->find();
+        $cookie_uid = ($cookie[0] != $this->change()) || ($cookie[2] != $user['token']) ? false : $cookie[1];
+        $cookie_uid =  $user['time']-time() >= 3600*24*7 ? false:$cookie_uid;
+        return $cookie_uid;
+    }
+	 /**
+     * 加密函数
+     * @param string $txt 需加密的字符串
+     * @param string $key 加密密钥，默认读取SECURE_CODE配置
+     * @return string 加密后的字符串
+     */
+    private function jiami($txt, $key = null)
+    {
+        empty($key) && $key = $this->change();
+
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-=_";
+        $nh = rand(0, 64);
+        $ch = $chars[$nh];
+        $mdKey = md5($key . $ch);
+        $mdKey = substr($mdKey, $nh % 8, $nh % 8 + 7);
+        $txt = base64_encode($txt);
+        $tmp = '';
+        $i = 0;
+        $j = 0;
+        $k = 0;
+        for ($i = 0; $i < strlen($txt); $i++) {
+            $k = $k == strlen($mdKey) ? 0 : $k;
+            $j = ($nh + strpos($chars, $txt [$i]) + ord($mdKey[$k++])) % 64;
+            $tmp .= $chars[$j];
+        }
+        return $ch . $tmp;
+    }
+
+    /**
+     * 解密函数
+     * @param string $txt 待解密的字符串
+     * @param string $key 解密密钥，默认读取SECURE_CODE配置
+     * @return string 解密后的字符串
+     */
+    private function jiemi($txt, $key = null)
+    {
+        empty($key) && $key = $this->change();
+
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-=_";
+        $ch = $txt[0];
+        $nh = strpos($chars, $ch);
+        $mdKey = md5($key . $ch);
+        $mdKey = substr($mdKey, $nh % 8, $nh % 8 + 7);
+        $txt = substr($txt, 1);
+        $tmp = '';
+        $i = 0;
+        $j = 0;
+        $k = 0;
+        for ($i = 0; $i < strlen($txt); $i++) {
+            $k = $k == strlen($mdKey) ? 0 : $k;
+            $j = strpos($chars, $txt[$i]) - $nh - ord($mdKey[$k++]);
+            while ($j < 0) {
+                $j += 64;
+            }
+            $tmp .= $chars[$j];
+        }
+
+        return base64_decode($tmp);
+    }
+
+    private function change()
+    {
+        preg_match_all('/\w/', C('DATA_AUTH_KEY'), $sss);
+        $str1 = '';
+        foreach ($sss[0] as $v) {
+            $str1 .= $v;
+        }
+        return $str1;
+    }
 }

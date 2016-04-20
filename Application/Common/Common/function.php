@@ -46,11 +46,39 @@
         return session('user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
     }
 }
+	//	说明：检测用户是否是超级管理员
+    //  返回值 boolean true-管理员，false-非管理员
+     function is_administrator($uid = null){
+     	
+     }
    	
-   
-   
-   
-   
-   
-   
+     // 说明：字符串转换为数组，与explode功能相同，只是参数顺序不同
+     // 参数 string $str 要分割的字符串
+     //参数 string $glue 分割符
+     // 返回值 array
+	function str2arr($str, $glue = ',' ){
+
+		}
+
+//		说明：调用系统的API接口的静态方法，例如：api('User/getName','id=5');// 调用公共模块的User接口的getName方法
+//		参数 string $name 格式 [模块名]/接口名/静态方法名
+//		参数 array|string $vars 参数
+     function api($name,$vars=array()){
+     	
+     }
+       
+//     说明：根据用户ID获取用户昵称。首先会尝试从session获取，其次尝试从缓存获取，如果没有获取到，从数据库获取并缓存。
+//     根据用户ID获取用户昵称
+//     参数 integer $uid 用户ID
+//     返回值 string 用户昵称
+      function get_nickname($uid = 0){
+      
+      }
+	  
+//      说明：根据用户ID获取用户名。首先会尝试从session获取，其次尝试从缓存获取，如果没有获取到，从数据库获取并缓存。
+//      参数 integer $uid 用户ID 返回值 string 用户名
+      function get_username($uid = 0){
+      	
+      }
+ 
  

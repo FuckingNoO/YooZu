@@ -149,7 +149,8 @@ $(document).ready(function(){ $("#register_btn").click( function(){
 	    };
 		$.post(Url,post_data,success);
 		function success(data){
-			alert(data);
+			//alert(data);
+			window.location.href="<?php echo U('Home/Index/index');?>";
 		}
 	  });
 	});
