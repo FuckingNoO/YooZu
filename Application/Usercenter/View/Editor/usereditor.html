@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <include file="Common@Public/head"/>
+		<title>编辑资料</title>
+	    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Usercenter/css/usereditor.css"/>
+	    <link rel="stylesheet" href="__STATIC__/Jcrop/css/jquery.Jcrop.min.css" />
+	    <script type="text/javascript" src="__STATIC__/Jcrop/js/jquery.Jcrop.min.js"></script>
+	    <script type="text/javascript" src="__STATIC__/browser/jquery.browser.js"></script>
+	    <script type="text/javascript" src="__STATIC__/form/jquery.form.js"></script>
+	</head>
+	<include file="Base/navbar"/>
+	<body>
+		    <include file="Base/header"/>
+			<div class="container">
+				<div class="panel panel-default">
+				    <div class="panel-heading">
+				    	<h2>个人设置</h2>
+				    </div>
+					<div class="panel-body">
+						<ul class="list-group">
+							<li class="list-group-item"><span class="">基本资料</span>
+							    <a data-toggle="collapse" href="#collapse1"><span class="badge pull-right">编辑</span></a> 
+								<include file="index"/>
+							</li>
+							<li class="list-group-item"><span class="">扩展资料</span>
+								<a data-toggle="collapse" href="#collapse2"><span class="badge pull-right">编辑</span></a>
+						        <include file="expandinfo"/>   
+							</li>
+							<li class="list-group-item"><span class="">修改头像</span>
+								<a data-toggle="collapse" href="#collapse3"><span class="badge pull-right">编辑</span></a>
+                                <include file="changeavatar"/>  
+							</li>
+							<li class="list-group-item"><span class="">背景图片</span>
+								<a data-toggle="collapse" href="#collapse4"><span class="badge pull-right">编辑</span></a>
+								<include file="changebg"/>
+							</li>
+							<li class="list-group-item"><span class="">更改密码</span>
+								<a data-toggle="collapse" href="#collapse5"><span class="badge pull-right">编辑</span></a>
+                                <include file="changepwd"/>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		<include file="Base/footer"/>
+		<script type="text/javascript">
+
+		</script>
+	</body>
+</html>

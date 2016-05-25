@@ -1,0 +1,68 @@
+    	<php>$weiboCommentTotalCount = $weibo['comment_count'];</php>
+    	<a href="javascript:void(0)" class="comment-commit-btn" id="comment_btn_{$weiboId}" data-weibo-id="{$weiboId}" comment-count="{$weiboCommentTotalCount}"> 	
+    	   	<img src="__PUBLIC__/Usercenter/image/comment_32.109589041096px_1195191_easyicon.net.png"/>
+      	</a>
+      	<span id="comment_count_{$weiboId}">{$weiboCommentTotalCount}</span>
+      <!--Comment section-->
+      <div id="comment_block_{$weiboId}" style="display: none;width: 400px;height: 400px;background-color: #AFAFAF;">
+      	<div class="container">
+      	    <div class="row comment-block-header">
+      	        write something here :D
+      		</div>
+      	    <div class="row comment-block-body" id="comment_list_{$weiboId}">
+                 <!--list weibo comments -->
+      	    </div>
+      	    <div  class="row comment-block-footer">
+      	      <textarea name="content" rows="1" cols="20" id="commentpostcontent_{$weiboId}"></textarea>
+      	      <button id="cmt_send_btn_{$weiboId}">Submit</button>
+      	    </div>
+      	</div>
+      </div>  
+      
+      <!--JavaScript Section-->
+      	<script>
+      	$('#comment_btn_' + '{$weiboId}').click(function(e){
+      			var mousePos = mousePosition(e);  
+                var  xOffset = 20;  
+                var  yOffset = 25;  
+                $('#comment_block_'+'{$weiboId}').css("display","block").css("position","absolute").css("top",(mousePos.y - yOffset) + "px").css("left",(mousePos.x + xOffset) + "px");
+   		        $.post('__URL__/loadComment',{weibo_id:'{$weiboId}'},function(result){ 
+                       if(result.status==0){
+                       	$('#comment_list_'+'{$weiboId}').text('no comments! :D');}
+                       else{
+                       	$('#comment_list_'+'{$weiboId}').html(result);}
+      		    });
+          });
+          
+          //send comment btn
+      		$('#cmt_send_btn_'+'{$weiboId}').click(function(){
+      			var commentcount=$('#comment_btn_'+'{$weiboId}').attr('comment-count');
+      			    $.post('__URL__/dosendComment',
+      			   {
+      				weibo_id:'{$weiboId}',
+      				content:$('#commentpostcontent_'+'{$weiboId}').val(),
+      			    },  
+      			    function(data){
+      				if(data.status){
+      					$('#comment_list_'+'{$weiboId}').prepend(data.html);
+      					$('#commentpostcontent_'+'{$weiboId}').val('');
+      					alert(data.info);
+      					commentcount++;
+      					$('#comment_count_'+'{$weiboId}').html(commentcount);
+      				}	
+      			});
+      		});
+      		//send comments to php server
+      		
+      		//acquire the mouse offset
+      		function mousePosition(ev){   
+                ev = ev || window.event;   
+                if(ev.pageX || ev.pageY){   
+                return {x:ev.pageX, y:ev.pageY};   
+                }   
+                return {   
+                x:ev.clientX + document.body.scrollLeft - document.body.clientLeft,   
+                y:ev.clientY + document.body.scrollTop - document.body.clientTop   
+                };  
+            }
+      	</script>

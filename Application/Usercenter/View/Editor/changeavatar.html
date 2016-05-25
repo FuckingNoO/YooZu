@@ -1,0 +1,84 @@
+<div id="collapse3" class="panel-collapse collapse">
+  <div class="panel-body">
+    <div class="panel-body-rightcolumn">
+      <div class="row">
+        <div class="panel-body-leftcolumn col-lg-6 col-md-6">
+          <h3>当前头像</h3>
+          <img src="__PUBLIC__/Usercenter/image/012.jpg" alt="" width="100px" height="100px"/>
+        </div>
+      <div class="panel-body-rightcolumn col-lg-6 col-md-6">
+          <h4>设置新头像</h4>
+          <p class="text-muted">支持jpg，png，gif，bmp等格式，可以在大照片中裁剪比较满意的部分</p>
+          <form id="avatar_form" enctype="multipart/form-data" action="__URL__/doUploadAvatar" method="post">
+             <p class="hide"><input type="file" name="image" class="avatar-input"/></p>
+            <div class="btn btn-primary" id="select_avatar_btn">更换头像</div>
+            <!--<input type="submit" value="submit" id="submit_btn"/>-->
+            <p class="text-error" id="submitTip"></p>
+          </form>
+          <p id="upload_tip" class="text-danger"></p>
+          <div id="uploaded_image_div" style="display: none;">
+          		<div class="thumbnail">
+                    <img id="uploaded_image" style="width: 100%;" class="thumbnails"/>
+                </div>
+                <p class="text-danger" id="save_avatar_tip"></p>
+                <p>
+                  <a class="btn btn-primary" id="save_avatar_button" data-url="{:U('UserCenter/Config/doCropAvatar')}">选区裁剪后保存头像</a>
+                </p>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  <script type="text/javascript">
+  $(function(){
+    	$('#select_avatar_btn').click(function(){
+    		$('.avatar-input').trigger('click');
+    	});
+          
+      $('.avatar-input').change(function(){	
+          	$(this).parent().submit();
+          });
+           
+      $('#avatar_form').on('submit',function(e){
+      		e.preventDefault();
+      		
+      		$.ajax(this.action, {
+                    files: $(":file", this),
+                    iframe: true,
+                    processData: false
+      		}).complete(function(data) {
+      			 var json=data.responseJSON;
+      			 
+      			 $('#avatar_form').trigger('onJson',[json]);
+      		});
+      	});
+      	
+      	$('#avatar_form').bind('onJson',function(e,json){
+      		 if (!json.success) {
+                    $('#upload_tip').text(json.message);
+               }
+                //隐藏图片上传表单
+                $('#avatar_form').hide();
+                //显示图片内容
+                $('#uploaded_image').attr('src', json.image);
+                $('#uploaded_image_div').show();
+              
+                $('#uploaded_image').load(function () {
+                    $('#uploaded_image').Jcrop({
+                        aspectRatio: 1,
+                        onSelect: updateCoordinate,
+                        minSize: [64,64],
+                        setSelect: [0,0,366,366]
+                    },function(){
+                        jcrop_api=this;
+                        crop=jcrop_api.tellScaled();
+                    });
+                })
+      	});
+      	function updateCoordinate(c) {
+                crop = c;
+            }
+  
+  });
+  </script>                             

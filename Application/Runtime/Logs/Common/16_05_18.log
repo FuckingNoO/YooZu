@@ -1,0 +1,18 @@
+[ 2016-05-18T12:23:18+08:00 ] 127.0.0.1 /xiangmu/YooZu/index.php/Public/Usercenter/image/Pencil_47.900207900208px_1190350_easyicon.net.png
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+ERR: 无法加载模块:Public
+
+[ 2016-05-18T22:11:02+08:00 ] 127.0.0.1 /xiangmu/YooZu/index.php/Public/Usercenter/image/012.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+ERR: 无法加载模块:Public
+
+[ 2016-05-18T22:11:03+08:00 ] 127.0.0.1 /xiangmu/YooZu/index.php/Public/Usercenter/image/012.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+ERR: 无法加载模块:Public
+

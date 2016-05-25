@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<include file="Common@Public/head" />
+    <title></title>
+    <link rel="stylesheet" href="__PUBLIC__/Usercenter/css/profilecard.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Usercenter/css/profile.css" />
+	</head>
+	<include file="Base/navbar"/>
+	<body>
+		<include file="Base/header"/>
+		<div class="profile-user-bgpicture">
+                 <img src="__PUBLIC__/Usercenter/image/003.jpg" alt="userbackground" width="100%" />
+        </div>
+        <div class="container">
+            <div class="row" id="userprofile-weibolist">
+            	<!------------------------------------------>
+            	<div class="profile_left_column col-sm-4 col-md-4">
+            		    <div class="panel panel-default user-profilecard">
+            		    	<div class="panel-heading user-profilecard-heading">
+            		    		<a href="#"><img src="__PUBLIC__/Usercenter/image/012.jpg" width="100%" height="100%"/></a>
+            		    	</div>
+            		    	<div class="panel-body user-profilecard-body">
+                                <ul class="list-group user-profilecard-list-group">
+                                	<li class="list-group-item user-profilecard-Nickname"><a href="">昵称:</a>
+                                		<span class="pull-right">zhujiahao</span>
+                                	</li>
+                                	<li class="list-group-item user-profilecard-activities"><a href="">我的活动</a>
+                                		<span class="badge">1</span>
+                                	</li>
+                                	<li class="list-group-item user-profilecard-followers"><a href="">支持者</a>
+                                		<span class="badge">2</span>
+                                	</li>
+                                	<li class="list-group-item user-profilecard-following"><a href="">正在关注</a>
+                                		<span class="badge">3</span>
+                                	</li>
+                                </ul>
+                           </div>
+                           <div class="panel-footer user-profilecard-footer">
+                           	<a href="{:U('Editor/usereditor',array())}" class="profilecard-footer-modify"><span class="pull-right">编辑资料</span></a></li>
+                           </div>
+            		    </div>
+            	</div>
+            	<!------------------------------------------->
+            	<div class="profile_right_column col-sm-8 col-md-8">
+            		<div id="myWeibolist">
+            			<include file="Public/loadweibo"/>
+            		</div>
+            	</div>
+            </div>
+        </div>
+        <include file="Base/footer"/>
+	</body>
+</html>

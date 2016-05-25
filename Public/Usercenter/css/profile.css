@@ -1,0 +1,53 @@
+body{
+	background-color: #38566F;
+}
+.userprofile-settings-list-group li{
+font-size: 25px;	
+font-weight: bold;
+color: #878A85;
+}
+.user-profilecard-list-group li{
+font-size: 25px;	
+font-weight: bold;
+color: #878A85;
+}
+
+.user-profilecard-heading img{
+ 	border-radius: 50%;
+}
+.user-profilecard-footer{
+	
+	padding-bottom: 20px;
+}
+
+.user-profilecard-footer a{
+	font-size: 20px;
+	font-weight: 800;
+	font-family: "微软雅黑";
+}
+
+.user-profile-list li{
+	display: inline;
+}
+
+ a:link{
+ text-decoration:none;
+ }
+a:visited{
+text-decoration:none;
+}
+a:hover{
+text-decoration:none;
+}
+a:active{
+text-decoration:none;
+}
+
+.panel{
+	border-radius: 25px;
+    padding: 20px;
+}
+
+
+
+

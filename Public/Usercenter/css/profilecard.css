@@ -1,0 +1,9 @@
+    	.ProfileCardStats-statList li{
+    	display: inline;	
+    	list-style: none;
+    	}
+    	
+    	.ProfileCardStats-statLabel{
+         font-size: 17px;
+         font-weight: bold;	
+    	}

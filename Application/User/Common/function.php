@@ -5,7 +5,7 @@
  * @return string
  */
 
-if (!defined('USER_COMMON_COMMON_PHP')) {
+if (!defined('USER_COMMON_FUNCTION_PHP')) {
     function think_ucenter_md5($str, $key = 'ThinkUCenter')
     {
         return '' === $str ? '' : md5(sha1($str) . $key);
@@ -19,7 +19,7 @@ if (!defined('USER_COMMON_COMMON_PHP')) {
      * @return string
      */
     function think_ucenter_encrypt($data, $key, $expire = 0)
-    {
+    {   
         $key = md5($key);
         $data = base64_encode($data);
         $x = 0;
@@ -74,4 +74,4 @@ if (!defined('USER_COMMON_COMMON_PHP')) {
 }
 
 //防止重复定义
-define('USER_COMMON_COMMON_PHP', 1);
+define('USER_COMMON_FUNCTION_PHP', 1);

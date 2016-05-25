@@ -1,35 +1,33 @@
-<extend name="Common@Base/base"/>
-<block name="title"><title>Welcome! My friend</title></block>
-<block name="content">
-	<div class="container-fluid">
-	        <div id="">
-	        	<div class="row">
-	        		<h1>Welcome,myfriend!:D</h1>
-	        	</div>
-	        </div>
-            <div id="login-content">	 	
-        	<div class="row">
-        	<div class="form  col-sm-6 col-sm-offset-3 col-md-offset-3 col-md-6">
-        			<div class="form-group form-group-lg">
-        				<input type="text"  name="username" id="username" class="form-control " placeholder="Username">
-        			</div>
-                    <div class="form-group form-group-lg">
-        				<input type="password" name="userpwd" id="userpwd" class="form-control" placeholder="password" >
-        			</div>
-        			<div class="form-group form-group-lg">
-                      <input type="text" name="login_captcha" id="login_captcha" class="form-control" placeholder="captcha" aria-describedby="basic-addon3">
-                    </div>
-                    <a class="btn btn-link pull-right" href="{:U('User/getpwd')}">忘记密码？</a>
-                    <button type="button" class="btn btn-default pull-right" id="login_btn">Login</button>
-                   <img  src="{:U('Home/User/create_vf',array())}" id="captcha" class="pull-left"/>
+<!DOCTYPE html>
+<html>
+	<head>
+		<include file="Common@Public/head"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/login.css"/>
+		<title>Welcome! My friend</title>
+	</head>
+<body>
+	<include file="Common@Public/header"/>
+	<div class="container">
+        	<form class="form-login">
+        		    <label for="username" class="sr-only">Username</label>
+        				<input type="text"  name="username" id="username" class="form-control " placeholder="Username" required autofocus>
+                    <span id="username_info"></span>
+                   <label for="userpwd" class="sr-only">Password</label>
+        				<input type="password" name="userpwd" id="userpwd" class="form-control" placeholder="Password" required autofocus>
+        			<span id="password_info"></span>
+        			<label for="login_captcha" class="sr-only">Captcha</label>
+                      <input type="text" name="login_captcha" id="login_captcha" class="form-control" placeholder="Captcha" aria-describedby="basic-addon3" required>     
+                    <span id="captcha_info"></span>     
+                    <button type="button" class="btn btn-lg btn-default btn-block" id="login_btn" style="color: white;">Login</button>
+                    <div class="checkbox" class="pull-right">
+                         <label><input type="checkbox" value="remember-me"> Remember me</label>                  
+                     </div>
+                    <img  src="{:U('Home/User/create_vf',array())}" id="captcha" class="pull-left"/>
                    <a href="javascript:void(0)" class="pull-left" id="refresh_captcha">看不清？</a>
-            </div>
-        	</div>
-          </div>	
+        	</form>	
         </div>
-</block>
-    <block name="script">
-    <script>
+        <include file="Common@Public/footer"/>
+        <script>
 	$(document).ready(function(){ 
 		$("#login_btn").click(function(){
 	    var Url='__URL__/login_user';
@@ -55,4 +53,5 @@
         	});
 	  });
 	</script>
-</block>
+ </body>
+ </html>

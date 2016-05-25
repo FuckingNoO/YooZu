@@ -1,0 +1,67 @@
+<!--Modal-->
+     	<div class="fade modal" id="sendblock">
+		<div class="modal-content container">
+			<div class="modal-header">
+				<h4 style="text-align: center;">hello,write something here! :D</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form">
+                    <div class="form-group">
+                        <label for="comment">write something here</label>
+                        <textarea name="content" class="form-control" rows="5" id="weibo_post_content"></textarea>
+                     </div>
+                </form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" id="add_picture_btn"><span class="glyphicon glyphicon-picture"></span></button>
+				<button type="button" class="btn btn-default" id="weibo_post_btn">send</button>
+			</div>
+	    </div>
+	</div>
+	<!--Session block-->
+	<div id="sessionblock">
+		<div class="container-fluid">
+		    <div class="row">
+		    </div>
+		</div>
+	</div>
+	<!--js block-->
+	<script>
+	$('.navbar-chatting-model').webuiPopover({
+		placement:'auto',
+		container: '.navbar-chatting-model',
+		trigger: 'click',
+		height:400,
+		width: 250,
+		url:'#sessionblock',
+		animation: 'pop',
+	    offsetTop:0,  // offset the top of the popover
+        offsetLeft:0,
+	});
+	
+	 $("#weibo_post_btn").click(function(){
+	 	    var Url="__URL__/accept_weibo";
+	 	    var postdata={
+	 		content:$("#weibo_post_content").val(),
+	 	};
+	 		postweibo(Url,postdata);}
+	 );
+	 function postweibo(Url,postdata)
+	 {
+	 	$.post(Url,postdata,function(result){
+	 		if(result.status){
+//	 		handleAjax(result);
+	 		$('#weibo_post_content').val('');
+	 		alert(result.info);
+	 		setTimeout(function(){
+	 			$('#weibo_list').prepend(result.html);
+	 			$('#myWeibolist').prepend(result.html);
+	 		},1000);
+	 	}
+	  });
+	 }
+	</script>
+	
+	
+	
+	

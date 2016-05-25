@@ -1,0 +1,25 @@
+{:W('Support/support',array())}
+{:W('Repost/repost',array())}
+{:W('Comment/comment',array('comment'=>$weibo))}
+<if condition="$weibo.uid eq get_uid()">
+<a href="javascript:void(0);" id="setting-owner_{$weibo.id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	<img src="__PUBLIC__/Usercenter/image/setting_32px_1194517_easyicon.net.png"/></a>
+</if>
+  <ul class="dropdown-menu" id="dropdown_{$weibo.id}" aria-labelledby="dropdownMenu1">
+    <li><a href="#" id="weibo_delete_{$weibo.id}">Delete</a></li>
+    <li><a href="#">Another action</a></li>
+  </ul>
+  <script>
+  	$('#weibo_delete_'+'{$weibo.id}').click(function(){
+    	$.post('__URL__/dodeleteWeibo',{weiboid:'{$weibo.id}'},function(result){
+    		if(result.status==1){
+    			alert(result.info);
+    			$('#weibo_'+'{$weibo.id}').empty();
+    			$('#weibo_'+'{$weibo.id}').css("display","none");
+    		}else{
+    			alert(result.info);
+    		}
+    	});
+   });
+  </script>
+    	

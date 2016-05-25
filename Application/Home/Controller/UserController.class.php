@@ -21,7 +21,7 @@ class UserController extends HomeController {
 				echo 'register successfully!';
                 //$uid = $User->login($username, $password);  
             } 
-				echo $uid;
+				echo $uid;                  
 	}
 	
 	//user log in

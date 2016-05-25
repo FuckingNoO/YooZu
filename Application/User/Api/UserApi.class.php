@@ -2,11 +2,11 @@
 
  namespace User\Api;
  use User\Api\Api;
- use User\Model\UsCMemberModel;
+ use User\Model\UcenterMemberModel;
  
  class UserApi extends Api{
  	protected function _init(){
- 		$this->model = new UsCMemberModel();
+ 		$this->model = new UcenterMemberModel();
  	}
 	
 	/**
@@ -131,5 +131,12 @@
         return $return;
     }
 	
+	 /**
+     * 自动登录用户
+     * @param  integer $user 用户信息数组
+     */
+    private function autoLogin($user, $remember = false){
+    	$this->model->autoLogin($user, $remember = false);
+    }
 	
  }

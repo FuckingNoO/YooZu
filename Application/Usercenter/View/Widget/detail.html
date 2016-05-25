@@ -1,0 +1,43 @@
+<div class="row" id="weibo_{$weibo.id}">
+<!--Avatar-->
+    <div class="col-md-2 col-sm-2 col-xs-12 text-center" style="position: relative;">
+    	<a href="javascript:void(0);" id="user_avatar_{$weibo.id}">
+    		<img src="__PUBLIC__/home/image/nobody.jpg" width="90px" height="90px"/>	
+    	</a>
+    </div> 
+
+<!--Content-->
+    <div class="col-md-10 col-sm-10 col-xs-12 panel panel-default" id="weibo_content_list">
+    	<div class="panel-heading row">
+    		<p>nihao</p>
+    	</div>
+    	
+    	<div class="panel-body row">
+    		<a>
+    			<img alt="image" src="__PUBLIC__/Usercenter/image/proxy.jpg" width="100%" height="100%"/>
+    		</a>
+    		{$weibo.fetchContent}
+    	</div>
+    	<div class="panel-footer row">
+    	  <div id="weibo_post_footer_content" class="pull-right">
+    	  	<include file="Public/_operation"/>
+    	  </div>
+    	</div>
+    </div>
+</div>
+<!--JS-->
+     <script type="text/javascript">
+    $(function(){
+			$('#user_avatar_'+'{$weibo.id}').webuiPopover({
+				trigger:'hover',
+				placement: 'right',
+				container:'#user_avatar_'+'{$weibo.id}',
+				content:'1234567891011111111111',
+				offsetTop:70,// offset the top of the popover
+                offsetLeft:20,
+                animation:'pop',
+                multi:true,
+			   });
+			});
+	</script>
+ 

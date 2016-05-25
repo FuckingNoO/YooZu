@@ -20,14 +20,18 @@
 <!--<!--[endif]-->
 
 <!-- 为了让html5shiv生效，请将所有的CSS都添加到此处 -->
-<link type="text/css" rel="stylesheet" href="/xiangmu/YooZu/Public/static/bootstrap/css/bootstrap.min.css"/>
-	
+<link type="text/css" rel="stylesheet" href="/xiangmu/YooZu/Public/static/bootstrap/css/bootstrap.min.css"/>	
+<link rel="stylesheet" type="text/css" href="/xiangmu/YooZu/Public/home/css/sticky-footer.css"/>	
+<link rel="stylesheet" type="text/css" href="/xiangmu/YooZu/Public/static/WebUIpopover/css/jquery.webui-popover.min.css"/>
 <!--Bootstrap Lib js-->
 <script src="/xiangmu/YooZu/Public/static/bootstrap/js/bootstrap.min.js"></script>
 
-	
-<!--other Lib
+<!--other Lib-->
+<script type="text/javascript" src="/xiangmu/YooZu/Public/static/slimscroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="/xiangmu/YooZu/Public/static/WebUIpopover/js/jquery.webui-popover.js"></script>
 
+
+<!--
 <script>
     //全局内容的定义
     var _ROOT_ = "/xiangmu/YooZu";
@@ -44,77 +48,116 @@
 	
 	
 
+<link type="text/css" rel="stylesheet" href="/xiangmu/YooZu/Public/home/css/home.css"/>
 <title>Yoozu-share things here</title>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-inverse">
+<nav class="navbar navbar-default navbar-inverse" style="height: 80px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="<?php echo U('Index/index');?>">Brand</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+      <a class="navbar-brand" href="<?php echo U('Index/index');?>" style="margin-top: 15px;font-size: 40px;"><b>Yoozu</b></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="<?php echo U('User/login');?>">Log in</a></li>
-        <li><a href="<?php echo U('User/signup');?>">Sign Up</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
+    <div class="collapse navbar-collapse" id="navbar">
+    <?php if($uid == 0): ?><ul class="nav navbar-nav navbar-right" style="margin-top: 15px;">
+        <li><a href="<?php echo U('User/login');?>" style="font-size: 30px;"><strong>Log In</strong></a></li>
+        <li><a href="<?php echo U('User/signup');?>" style="font-size: 30px;"><strong>Sign Up</strong></a></li>
+      </ul><?php endif; ?>
     </div><!-- /.navbar-collapse -->
+ //present the useravadar 
+ <?php if($uid != 0): ?><div id="">
+  	<img src=""/>
+  </div><?php endif; ?>
   </div><!-- /.container-fluid -->
 </nav>
 
 
 
 
-<div class="jumbotron">
+<div class="jumbotron" style="padding-top: 60px;margin-top: -20px;">
   <div class="container">
-    <h1>Hello, world!</h1>
-    <p>Welcome to Yoozu</p>
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">Join us</a></p>
+  	<div class="row">
+  	  <div class="col-md-6 col-sm-12"><img src="/xiangmu/YooZu/Public/home/image/claim.png" alt="claim.png" width="450px" height="450px"/></div>
+      <div class="col-md-6 col-sm-12" id="text_content">
+        <h1 style="font-size: 7em;">hello,myfriend</h1>
+        <p style="font-size: 2em;">Welcome to Yoozu ! Now you can enjoy doing what you want to do here! :)</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button" style="font-size: 30px;"><b>Join us</b></a></p>
+      </div>
   </div>
 </div>
+</div>
 <div class="container">
-
+     <div class="row">
+     	<div class="jumbotron">
+     		<div class="container">
+     	 <p style="text-align: center; font-size: 60px;">You can share things here like this ! </p>
+     	</div>
+     	</div>
+     	 <img src="/xiangmu/YooZu/Public/home/image/image2.jpg" alt="image1.jpg" style="width: 100%;"/>
+     </div>
+     <div class="row">
+     	  <div class="jumbotron">
+     	  <div class="container">
+     	  <p style="text-align: center;font-size: 60px;">You can do what you want with other people,Like this!</p>
+     	  </div>
+     	  </div>
+     	   <img src="/xiangmu/YooZu/Public/home/image/image1.jpg" alt="image2.jpg" style="width: 100%;"/>
+     </div>
+     <hr>
+     <div class="row">
+     	<div class="jumbotron">
+     	<div class="container">
+      <p style="text-align: center;font-size: 60px;">You can make friends like this!</p>
+     	</div>
+     	</div>
+     	<img src="/xiangmu/YooZu/Public/home/image/image2.jpg"alt="image3.png" style="width: 100%;"/>
+     </div>
 </div>	
-<include file="Common@Public/footer">
+         <footer class="footer">
+      <div class="container">	
+           <div class="row">
+           	<div class="col-md-3">
+           		<h5 style="font-size: 40px;"><b>YooZu@<b></h5>
+           		<p><b>Changzhou Office</b></p>
+           		<p><b>1832 Buchanan Street #201,</b></p>
+           		<p><b>San Francisco, CA 94115</b></p>
+           	</div>
+           	<div class="col-md-3">
+           		<ul>
+           			<li><a href="#" style="font-size: 40px;"><b>Company</b></a></li>
+           			<li><a href="#">Blog</a></li>
+           			<li><a href="#">About</a></li>
+           			<li><a href="#">Contact</a></li>
+           		</ul>
+           	</div>
+           	<div class="col-md-3">
+           		<ul>
+           			<li><a href="#" style="font-size: 40px;"><b>YooZu</b></a></li>
+           			<li><a href="#">what can it do</a></li>
+           			<li><a href="#">how</a></li>
+           		</ul>
+           	</div>
+           	<div class="col-md-3">
+           		<ul>
+           			<li><a href="#" style="font-size: 40px;"><b>Contact</b></a></li>
+           			<li>Tel:15061110931</li>
+           			<li>Email:1158656977@qq.com</li>
+           		</ul>
+           	</div>
+           </div>
+           <div class="row">
+           	
+           </div>
+      </div>
+    </footer>
+
 </body>
 </html>

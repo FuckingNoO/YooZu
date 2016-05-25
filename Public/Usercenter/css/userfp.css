@@ -1,0 +1,27 @@
+body{
+padding-top: 70px;
+background-color: #38566F;
+}
+a:link{
+ text-decoration:none;
+ }
+a:visited{
+text-decoration:none;
+}
+a:hover{
+text-decoration:none;
+}
+a:active{
+text-decoration:none;
+}
+
+.panel{
+	border-radius: 25px;
+    padding: 20px;
+}
+   
+.recommendation-panel-list-group li{
+    height: 65px;
+}   
+    	
+    	

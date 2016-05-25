@@ -1,0 +1,21 @@
+<a href="javascript:void(0)" id="support_btn_{$weibo.id}" data-weibo-id="{$weibo.id}">
+	<img src="__PUBLIC__/Usercenter/image/heart_39.36690647482px_1197877_easyicon.net.png"/>
+</a>
+<span id="s_count_{$weibo.id}" support-count='{$weibo.support_count}'>{$weibo.support_count}</span>
+<script type="text/javascript">
+		$('#support_btn_'+'{$weibo.id}').click(function(){
+			var weiboId=$('#support_btn_'+'{$weibo.id}').attr('data-weibo-id');
+			var supportcount=$('#s_count_'+'{$weibo.id}').attr('support-count');
+			$.post('__URL__/dosupport',
+			{weiboid:weiboId},
+			function(data){
+				if(data.status==1){
+					supportcount++;
+					alert(data.info);
+					$('#s_count_'+'{$weibo.id}').html(supportcount);
+				}else{
+					alert(data.info);
+				}
+			});
+		});
+</script>

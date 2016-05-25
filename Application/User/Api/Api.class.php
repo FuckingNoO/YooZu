@@ -2,9 +2,7 @@
 namespace User\Api;
 
 define('UC_CLIENT_PATH', dirname(dirname(__FILE__)));
-
-require_cache(UC_CLIENT_PATH . '/Config/config.php');
-
+require_cache(UC_CLIENT_PATH . '/Conf/config.php');
 require_cache(UC_CLIENT_PATH . '/Common/function.php');
 
  abstract class Api{
