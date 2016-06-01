@@ -54,4 +54,18 @@
 		}
         return $_FILES['image'];
     }
+	
+	public function applyAvatar($crop){
+		$this->requireLogin();
+        //裁剪、保存头像
+        $addon = new AvatarAddon();
+        $result = $addon->apply($this->getUid(), $crop);
+        if (!$result) {
+            $this->apiError(0, $addon->getError());
+        }
+        //返回成功消息
+        $this->apiSuccess('头像保存成功');
+	}
+	
+	
 }

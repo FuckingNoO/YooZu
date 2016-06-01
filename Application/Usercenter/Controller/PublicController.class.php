@@ -29,10 +29,21 @@ class PublicController extends Controller {
 		$this->error("404,please log in first!",U('Home/Index/index'));
 	}
   }
-    public function accept_weibo($content,$type="feed") 
+	
+    public function accept_weibo($content,$attach_id='',$type="feed",$map=array()) 
 	{
-	    
-		$result=$this->weiboApi->sendWeibo($content,$type);
+		if($attach_id){
+			$picture=M('picture');
+			$map['id']=$attach_id;
+			$picture->is_temp=0;
+			$picture->where($map)->save();
+		}
+		
+		
+		$feed_data='';
+        $feed_data['attach_id']=$attach_id;
+        
+		$result=$this->weiboApi->sendWeibo($content,$type,$feed_data);
 		$weibo=$this->weiboApi->getWeiboDetail($result['weibo_id']);
 		$result['html'] = R('WeiboDetail/weibo_html', array('weibo' => $weibo['weibo']), 'Widget');
 
@@ -106,6 +117,36 @@ class PublicController extends Controller {
 		    $this->ajaxReturn(apiToAjax($result));
 	    }
 	}
+	
+	public function uploadImage(){
+		$model=M('picture');
+		$config=C('PICTURE_UPLOAD');
+		$upload = new \Think\Upload($config);// 实例化上传类
+        $info = $upload->upload();
+		if($info){
+			foreach ($info as $key => &$value){
+                $data=array('path'=>'Uploads/Picture/'.$value['savepath'].$value['savename'],'uid'=>get_uid(),'create_time'=>NOW_TIME,'status'=>1,'is_temp'=>1);
+			}
+			if($imgid=$model->add($data)){
+			    $result=array('success'=>1,'message'=>'成功!','image'=>getRootUrl().$data['path'],'id'=>$imgid);
+				$this->iframeReturnf($result);
+			}
+			$this->error($model->getError());
+		}
+		$this->error();
+	}
+	
+	private function iframeReturnf($result){
+	        $json = json_encode($result);
+            $json = htmlspecialchars($json);
+            $html = "<textarea data-type=\"application/json\">$json</textarea>";
+            echo $html;
+            exit;
+		}
+	
+	
+	
+	
 }
 
 

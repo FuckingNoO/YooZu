@@ -1,22 +1,33 @@
 <!--Modal-->
-     	<div class="fade modal" id="sendblock">
-		<div class="modal-content container">
+  
+<div class="fade modal" id="sendblock" tabindex="-1" role="dialog" aria-labelledby="mysendModalLabel">
+		<div class="modal-dialog">
+		  <div class="modal-content">	
 			<div class="modal-header">
-				<h4 style="text-align: center;">hello,write something here! :D</h4>
+				<p class="text-muted" style="font-size: 30px; text-align: center;">hello,write something here!</p>
 			</div>
 			<div class="modal-body">
 				<form role="form">
                     <div class="form-group">
-                        <label for="comment">write something here</label>
-                        <textarea name="content" class="form-control" rows="5" id="weibo_post_content"></textarea>
+                        <textarea name="content" class="form-control" rows="5" id="weibo_post_content" placeholder="发表些什么吧.........."></textarea>
                      </div>
                 </form>
+              <!--显示图片的区域-->  
+        <div id="uploadimg-div" style="display: none;">
+        	<div class="thumbnails">
+        	    <img class="thumbnails" id="uploadweibo_image" style="width: 100%;"/>
+        	</div>
+        </div>        
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default" id="add_picture_btn"><span class="glyphicon glyphicon-picture"></span></button>
-				<button type="button" class="btn btn-default" id="weibo_post_btn">send</button>
+		      <ul class="pull-left">		
+				     {:W('InsertImage/insertImage')}
+				     {:W('InsertFace/insertFace')}
+		      </ul>	
+				<button type="button" class="btn btn-info btn-lg" id="weibo_post_btn">发送</button>
 			</div>
 	    </div>
+	  </div> 
 	</div>
 	<!--Session block-->
 	<div id="sessionblock">
@@ -27,6 +38,8 @@
 	</div>
 	<!--js block-->
 	<script>
+$(function(){
+	
 	$('.navbar-chatting-model').webuiPopover({
 		placement:'auto',
 		container: '.navbar-chatting-model',
@@ -42,24 +55,29 @@
 	 $("#weibo_post_btn").click(function(){
 	 	    var Url="__URL__/accept_weibo";
 	 	    var postdata={
-	 		content:$("#weibo_post_content").val(),
+	 		  content:$("#weibo_post_content").val(),
+	 		  attach_id:$('#uploadweibo_image').attr('attach_id'),
 	 	};
-	 		postweibo(Url,postdata);}
-	 );
+	 		postweibo(Url,postdata);
+	 });
+	 
 	 function postweibo(Url,postdata)
 	 {
 	 	$.post(Url,postdata,function(result){
 	 		if(result.status){
 //	 		handleAjax(result);
+      alert(result.info);
 	 		$('#weibo_post_content').val('');
-	 		alert(result.info);
 	 		setTimeout(function(){
 	 			$('#weibo_list').prepend(result.html);
 	 			$('#myWeibolist').prepend(result.html);
 	 		},1000);
 	 	}
 	  });
+	  $('#uploadweibo_image').attr('attach_id','');
 	 }
+	 
+	 });
 	</script>
 	
 	

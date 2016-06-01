@@ -6,15 +6,59 @@
                     <img src="__PUBLIC__/Usercenter/image/003.jpg" alt="" width="200px" height="100px"/>
             </div>
         <div class="panel-body-rightcolumn col-lg-6 col-md-6">
-        <h4>设置新背景</h4>
-        <p class="text-muted">支持jpg，png，gif，bmp等格式，可以在大照片中裁剪比较满意的部分</p>
-        <div class="btn btn-primary" id="select_bg_btn">更换背景</div>
+            <h4>设置新背景</h4>
+            <p class="text-muted">支持jpg，png，gif，bmp等格式，可以在大照片中裁剪比较满意的部分</p>
+            <form action="__URL__/doUploadAvatar" method="post" enctype="multipart/form-data" id="bg-form">
+            <p class="hide"><input type="file" name="image" class="bg-input"/></p>
+            <div class="btn btn-primary" id="select_bg_file">更换背景</div>
+        </form>
+         <p class="bg-text-error"></p>
+        <div id="bg-uploaded-div" style="display: none;">
+         <div class="thumbnails">	
+        	<img id="upload_bg_img" style="max-width: 100%;" class="thumbnails"/>
+        </div>	
+        	<p class="bg-text-danger"></p>
+        	<div class="btn btn-default" id="select_bg_btn">保存背景</div>
+        </div>	
          </div>
     </div>   
 </div>
 </div>
 <script type="text/javascript">
-		$('#select_bg_btn').click(function(){
-	            $('[name=image]').trigger('click');
-			});
+$(function(){
+		
+	$('#select_bg_file').click(function(){
+	    $('.bg-input').trigger('click');
+	});
+	
+	$('.bg-input').change(function(){
+		$('#bg-form').submit();
+	});
+	
+	$('#bg-form').on('submit',function(e){
+		e.preventDefault();
+		
+		$.ajax(this.action,{
+			files:$(':file',this),
+			iframe:true,
+			processdata:false
+		}).complete(function(data){
+			var json=data.responseJSON;
+			$('#bg-form').trigger('onJson',[json]);
+		});
+	});
+	     $('#bg-form').bind('onJson',function(e,json){
+	     	if(!json.success){
+	     		$('.bg-text-error').text(json.message); 
+	     	}
+	     	$('#bg-form').hide();
+	     	$('#upload_bg_img').attr('src',json.image);
+	     	$('#bg-uploaded-div').show();
+	     });
+	     
+	     $('#select_bg_btn').on('click',function(){
+	     	window.location.href=location.href;
+	     });
+	
+});
 </script>

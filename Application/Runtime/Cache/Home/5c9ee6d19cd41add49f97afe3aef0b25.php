@@ -21,6 +21,7 @@
 
 <!-- 为了让html5shiv生效，请将所有的CSS都添加到此处 -->
 <link type="text/css" rel="stylesheet" href="/xiangmu/YooZu/Public/static/bootstrap/css/bootstrap.min.css"/>	
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/xiangmu/YooZu/Public/home/css/sticky-footer.css"/>	
 <link rel="stylesheet" type="text/css" href="/xiangmu/YooZu/Public/static/WebUIpopover/css/jquery.webui-popover.min.css"/>
 <!--Bootstrap Lib js-->
@@ -28,6 +29,7 @@
 
 <!--other Lib-->
 <script type="text/javascript" src="/xiangmu/YooZu/Public/static/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/xiangmu/YooZu/Public/static/jquery.iframe-transport.js" type="text/javascript"></script>
 <script type="text/javascript" src="/xiangmu/YooZu/Public/static/WebUIpopover/js/jquery.webui-popover.js"></script>
 
 
@@ -72,7 +74,7 @@
         <li><a href="<?php echo U('User/signup');?>" style="font-size: 30px;"><strong>Sign Up</strong></a></li>
       </ul><?php endif; ?>
     </div><!-- /.navbar-collapse -->
- //present the useravadar 
+<!-- present the useravadar -->
  <?php if($uid != 0): ?><div id="">
   	<img src=""/>
   </div><?php endif; ?>

@@ -21,6 +21,7 @@
 
 <!-- 为了让html5shiv生效，请将所有的CSS都添加到此处 -->
 <link type="text/css" rel="stylesheet" href="/xiangmu/YooZu/Public/static/bootstrap/css/bootstrap.min.css"/>	
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/xiangmu/YooZu/Public/home/css/sticky-footer.css"/>	
 <link rel="stylesheet" type="text/css" href="/xiangmu/YooZu/Public/static/WebUIpopover/css/jquery.webui-popover.min.css"/>
 <!--Bootstrap Lib js-->
@@ -28,6 +29,7 @@
 
 <!--other Lib-->
 <script type="text/javascript" src="/xiangmu/YooZu/Public/static/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/xiangmu/YooZu/Public/static/jquery.iframe-transport.js" type="text/javascript"></script>
 <script type="text/javascript" src="/xiangmu/YooZu/Public/static/WebUIpopover/js/jquery.webui-popover.js"></script>
 
 
@@ -52,7 +54,8 @@
     <link rel="stylesheet" href="/xiangmu/YooZu/Public/Usercenter/css/profilecard.css" />
     <link rel="stylesheet" href="/xiangmu/YooZu/Public/Usercenter/css/profile.css" />
 	</head>
-	 <nav class="navbar navbar-default navbar-fixed-top">
+	
+ <nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -62,7 +65,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><img src="/xiangmu/YooZu/Public/Usercenter/image/year_of_monkey_48px_1168430_easyicon.net.png"/></a>
+      <a class="navbar-brand" href="#"><span class="fa fa-foursquare" aria-hidden="true" style="font-size: 60px; color: #00FFFF;"></span></a>
     </div>
      
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -74,14 +77,14 @@
         <button type="submit" class="btn btn-default">GO</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<?php echo U('Public/userfp',array('uid'=>get_uid()));?>"><img src="/xiangmu/YooZu/Public/Usercenter/image/home_48px_1196787_easyicon.net.png"></a></li>
-        <li><a href="<?php echo U('Lease/lease');?>"><img src="/xiangmu/YooZu/Public/Usercenter/image/Bicycle_48px_1177189_easyicon.net.png"/></a></li>
-        <li><a href="#" class="navbar-chatting-model"><img src="/xiangmu/YooZu/Public/Usercenter/image/speech_balloon_49.088659793814px_1196235_easyicon.net.png"/></a></li>
+        <li><a href="<?php echo U('Public/userfp',array('uid'=>get_uid()));?>"><span class="fa fa-university" aria-hidden="true" style="font-size: 60px;"></span></a></li>
+        <li><a href="<?php echo U('Lease/lease');?>"><span class="fa fa-bicycle" aria-hidden="trues" style="font-size: 60px;"></span></a></li>
+        <li><a href="#" class="navbar-chatting-model"><span class="fa fa-comments" aria-hidden="true" style="font-size: 60px;"></span></a></li>
         <li class="dropdown">
-        	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/xiangmu/YooZu/Public/Usercenter/image/email_67.505016722408px_1197077_easyicon.net.png"></a>
+        	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-envelope-o" aria-hidden="true" style="font-size: 60px;"></span></a>
         </li>
-        <li><a href="<?php echo U('Profile/profile',array('uid'=>get_uid()));?>"><img src="/xiangmu/YooZu/Public/Usercenter/image/user_man_setting_48px_1174256_easyicon.net.png"></a></li>
-        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#sendblock"><img src="/xiangmu/YooZu/Public/Usercenter/image/Pencil_47.900207900208px_1190350_easyicon.net.png"></a></li>
+        <li><a href="<?php echo U('Profile/profile',array('uid'=>get_uid()));?>"><span class="fa fa-cog" aria-hidden="true" style="font-size: 60px;"></span></a></li>
+        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#sendblock"><span class="fa fa-pencil" aria-hidden="true" style="font-size: 60px;color: #00FFFF;"></span></a></li>
       </ul>
         </div>
     </div>
@@ -90,24 +93,35 @@
  
 	<body>
 		<!--Modal-->
-     	<div class="fade modal" id="sendblock">
-		<div class="modal-content container">
+  
+<div class="fade modal" id="sendblock" tabindex="-1" role="dialog" aria-labelledby="mysendModalLabel">
+		<div class="modal-dialog">
+		  <div class="modal-content">	
 			<div class="modal-header">
-				<h4 style="text-align: center;">hello,write something here! :D</h4>
+				<p class="text-muted" style="font-size: 30px; text-align: center;">hello,write something here!</p>
 			</div>
 			<div class="modal-body">
 				<form role="form">
                     <div class="form-group">
-                        <label for="comment">write something here</label>
-                        <textarea name="content" class="form-control" rows="5" id="weibo_post_content"></textarea>
+                        <textarea name="content" class="form-control" rows="5" id="weibo_post_content" placeholder="发表些什么吧.........."></textarea>
                      </div>
                 </form>
+              <!--显示图片的区域-->  
+        <div id="uploadimg-div" style="display: none;">
+        	<div class="thumbnails">
+        	    <img class="thumbnails" id="uploadweibo_image" style="width: 100%;"/>
+        	</div>
+        </div>        
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default" id="add_picture_btn"><span class="glyphicon glyphicon-picture"></span></button>
-				<button type="button" class="btn btn-default" id="weibo_post_btn">send</button>
+		      <ul class="pull-left">		
+				     <?php echo W('InsertImage/insertImage');?>
+				     <?php echo W('InsertFace/insertFace');?>
+		      </ul>	
+				<button type="button" class="btn btn-info btn-lg" id="weibo_post_btn">发送</button>
 			</div>
 	    </div>
+	  </div> 
 	</div>
 	<!--Session block-->
 	<div id="sessionblock">
@@ -118,6 +132,8 @@
 	</div>
 	<!--js block-->
 	<script>
+$(function(){
+	
 	$('.navbar-chatting-model').webuiPopover({
 		placement:'auto',
 		container: '.navbar-chatting-model',
@@ -133,10 +149,12 @@
 	 $("#weibo_post_btn").click(function(){
 	 	    var Url="/xiangmu/YooZu/index.php/Usercenter/Profile/accept_weibo";
 	 	    var postdata={
-	 		content:$("#weibo_post_content").val(),
+	 		  content:$("#weibo_post_content").val(),
+	 		  attach_id:$('#uploadweibo_image').attr('attach_id'),
 	 	};
-	 		postweibo(Url,postdata);}
-	 );
+	 		postweibo(Url,postdata);
+	 });
+	 
 	 function postweibo(Url,postdata)
 	 {
 	 	$.post(Url,postdata,function(result){
@@ -150,23 +168,28 @@
 	 		},1000);
 	 	}
 	  });
+	  $('#uploadweibo_image').attr('attach_id','');
 	 }
+	 
+	 });
 	</script>
 	
 	
 	
 	
 
+		<?php $url=getUserBackground($uid=get_uid()); ?>
 		<div class="profile-user-bgpicture">
-                 <img src="/xiangmu/YooZu/Public/Usercenter/image/003.jpg" alt="userbackground" width="100%" />
+                 <img src="<?php echo ($url); ?>" alt="userbackground" width="100%" />
         </div>
         <div class="container">
             <div class="row" id="userprofile-weibolist">
             	<!------------------------------------------>
             	<div class="profile_left_column col-sm-4 col-md-4">
-            		    <div class="panel panel-default user-profilecard">
-            		    	<div class="panel-heading user-profilecard-heading">
-            		    		<a href="#"><img src="/xiangmu/YooZu/Public/Usercenter/image/012.jpg" width="100%" height="100%"/></a>
+            		    <div class="panel panel-default user-profilecard" style="padding: 5px;">
+            		    	<div class="panel-heading user-profilecard-heading" style="padding: 0;">
+            		    		<a href="#"><img src="<?php echo ($url); ?>" 
+            		    			width="100%" height="100%"/></a>
             		    	</div>
             		    	<div class="panel-body user-profilecard-body">
                                 <ul class="list-group user-profilecard-list-group">
@@ -184,7 +207,7 @@
                                 	</li>
                                 </ul>
                            </div>
-                           <div class="panel-footer user-profilecard-footer">
+                           <div class="panel-footer user-profilecard-footer" style="margin-bottom: 5px;">
                            	<a href="<?php echo U('Editor/usereditor',array());?>" class="profilecard-footer-modify"><span class="pull-right">编辑资料</span></a></li>
                            </div>
             		    </div>

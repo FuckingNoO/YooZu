@@ -6,7 +6,7 @@
 		$('#support_btn_'+'<?php echo ($weibo["id"]); ?>').click(function(){
 			var weiboId=$('#support_btn_'+'<?php echo ($weibo["id"]); ?>').attr('data-weibo-id');
 			var supportcount=$('#s_count_'+'<?php echo ($weibo["id"]); ?>').attr('support-count');
-			$.post('/xiangmu/YooZu/index.php/Usercenter/Profile/dosupport',
+			$.post('/xiangmu/YooZu/index.php/Usercenter/Public/dosupport',
 			{weiboid:weiboId},
 			function(data){
 				if(data.status==1){

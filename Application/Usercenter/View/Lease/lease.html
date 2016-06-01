@@ -3,19 +3,127 @@
 	<head>
 		<include file="Common@Public/head" />
 		<title>欢迎来到租赁界面</title>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Usercenter/css/lease.css"/>
 	</head>
-	<include file="" />
+	<include file="Base/navbar"/>
 	<body>
-		<div class="contain leasepage-body">
-			<div class="row">
-				<div class="">
-					
+	<include file="Base/header"/>
+		<div class="container leasepage-body">
+	    <div class="col-md-8 col-sm-8 lease_left_column">	
+            <include file="leaseheader"/>
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="vehicle_list">
+					<!--加载交通工具-->
+			        <include file="transport"/>
 				</div>
 				
-				<div class="">
-					 
+				<div class="tab-pane fade" id="study_list">
+					<!--加载学习用品内容-->
 				</div>
-			</div>
-		</div>
+				
+				<div class="tab-pane fade" id="sport_list">
+					<!--加载体育用品内容-->
+				</div>
+				
+				<div class="tab-pane fade" id="entertainment_list">
+				    <!--加载娱乐物品内容-->
+				</div>
+			    <div class="tab-pane fade" id="other_list">
+				    <!--加载其他物品内容-->
+				</div>
+			</div>	
+        </div>
+        <!-- -->
+        <div class="col-md-4 col-sm-6 lease_right_column">
+        	<div class="panel panel-success">
+        		<div class="panel-heading">
+        			<h3>请在此输入信息</h3>
+        		</div>
+        		<div class="panel-body">
+        			<div id="upload-goods-div" style="display: none;">
+                    	<div class="thumbnails">
+                    		<img class="thumbnails" style="width: 100%;" id="upload-goods-img"/>
+                    	</div>
+                   </div>
+        		<div class="textarea-div">
+        		<form role='form' id="goodsinfo-form">
+        			<textarea name="content" rows="" cols="36" id="goodsexpandinfo"></textarea>
+        			<select name="goods" id='good-category'>
+        				<option value="transport" selected="selected">交通工具</option>
+        				<option value="studying">学习用品</option>
+        				<option value="PE">体育器材</option>
+        				<option value="entertainment">娱乐设施</option>
+        				<option value="other">其他</option>
+        			</select>
+        	    </form>
+        		</div>	
+        		    <form action="__URL__/douploadgoodsimg" method="post" enctype="multipart/form-data" id="goods-form">
+        				<p class="hide"><input type="file" name="image" class="input_goods_img"/></p>
+        				<div class="btn btn-default pull-right" id="select_goodsfile_btn">上传图片</div>
+        			</form>
+        			<p class="error-info"></p>
+        		</div>
+        		<div class="panel-footer">
+        			<button class="btn btn-default" id="goodsform_submit_btn" data-url="__URL__/dosubmitgoods">提交</button>
+        		</div>
+        	</div>
+        </div>
+    </div>    
+    <script type="text/javascript">
+    $(function(){
+    		$('#select_goodsfile_btn').click(function(){
+    			$('.input_goods_img').trigger('click');
+    		});
+    		
+    	$('.input_goods_img').change(function(){
+    		 $('#goods-form').submit();
+    	});
+    	
+    	$('#goods-form').on('submit',function(e){
+    		e.preventDefault();
+    		
+    		$.ajax(this.action,{
+    			files:$(':file',this),
+    			iframe:true,
+    			processData:false
+    		}).complete(function(data){
+    			var json = data.responseJSON;
+    			$('#goods-form').trigger('onJson',[json]);
+    		});
+    	});
+    	
+    	$('#goods-form').bind('onJson',function(e,json){
+    		if(!json.success){
+    			$('.error-info').text(json.info);
+    		}
+    		$('#goods-form').hide();
+    		$('#upload-goods-img').attr('attach_id',json.id);
+    		$('#upload-goods-img').attr('src',json.image);
+    		$('#upload-goods-div').show();9
+    	});
+        
+        $('#goodsform_submit_btn').click(function(){
+        	
+        	var url=$('#goodsform_submit_btn').attr('data-url');
+        	var datalist={
+        		content:$('#goodsexpandinfo').val(),
+        		type:$('#good-category').val(),
+        	    attach_id:$('#upload-goods-img').attr('attach_id'),
+        	}
+        	$.post(url,datalist,function(a){
+        		if(a.status==1){
+        			alert(a.info);
+        			$('#upload-goods-img').attr('attach_id','');
+        			$('#upload-goods-img').attr('src','');
+//      			document.getElementById('goodsinfo-form').reset();
+        			$('#goods-form').toggle();
+        			$('#upload-goods-img').toggle();
+                    window.location.href=location.href;
+        		}
+        		 alert(a.info);
+        	});
+        }); 		
+});
+    </script>
 	</body>
 </html>

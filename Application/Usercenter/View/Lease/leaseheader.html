@@ -1,0 +1,50 @@
+<ul class="nav nav-tabs lease-nav-tabs">
+	<li class="active"><a data-toggle="tab" href="#vehicle_list">
+		<span class="fa fa-bicycle" aria-hidden="true" style=""><span></a></li>
+	<li class=""><a data-toggle="tab" href="#study_list">
+		<span class="fa fa-book" aria-hidden="true" style=""></span></a></li>
+	<li class=""><a data-toggle="tab" href="#sport_list">
+		<span class="fa fa-futbol-o" aria-hidden="true" style=""><span></a></li>
+	<li class=""><a data-toggle="tab" href="#entertainment_list" >
+    	<span class="fa fa-gamepad" aria-hidden="true"></span></a></li>	
+    <li class=""><a data-toggle="tab" href="#other_list" >
+    	<span class="fa fa-plus" aria-hidden="true"></span></a></li>	
+</ul>	
+<script type="text/javascript">
+	$(function(){
+		//
+		$('.fa-book').on('click',function(){
+			
+			loadgoodslistByType('studying','#study_list');
+		});
+		//
+		$('.fa-futbol-o').on('click',function(){
+			
+			loadgoodslistByType('PE','#sport_list');
+		});
+		//
+		$('.fa-gamepad').on('click',function(){
+			
+			loadgoodslistByType('entertainment','#entertainment_list');
+		});
+		
+		//
+		$('.fa-plus').on('click',function(){
+			loadgoodslistByType('other','#other_list');
+		});
+		
+		function loadgoodslistByType(type,selector){
+			var url='__URL__/loadgoodlistByType';
+			$.post(url,{type:type},function(a){
+				if(a.status==0){
+				  alert(a.info);
+				}
+				$(selector).html(a);
+				
+			});
+		}
+		
+		
+		
+	});
+</script>

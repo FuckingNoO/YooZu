@@ -243,3 +243,34 @@ function clean_query_user_cache($uid, $field)
     }
     S("query_user_{$uid}_{$field}", null);
 }
+
+function getUserBackground($uid){
+    $avatarAddon = new \Addons\Avatar\AvatarAddon();
+	
+	$url=$avatarAddon->getTempAvatar($uid);
+	return $url;
+}
+
+function getWeiboattachimg($id){
+	$map=array('id'=>$id,'status'=>1,'is_temp'=>0);
+	$info=M('picture')->where($map)->select();
+	if('$info'){
+	    foreach($info as $key=>&$value){
+      	    $fullpath=getRootUrl().$value['path'];
+	    }
+	    return $fullpath;
+	}
+	return false;
+}
+
+function getGoodattachimg($id){
+    $map=array('id'=>$id,'status'=>1,'is_temp'=>0);
+	$info=M('goodsimg')->where($map)->select();
+	if($info){
+	    foreach($info as $key=>&$value){
+      	    $fullpath=getRootUrl().$value['path'];
+	    }
+	    return $fullpath;
+	}
+	return false;
+}

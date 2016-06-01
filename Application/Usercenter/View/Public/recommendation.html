@@ -1,12 +1,13 @@
-<div class="panel panel-default">
+<div class="panel panel-default" style="padding: 10px;">
 	<div class="panel-heading recommendation-panel-heading">
-		推荐的微博
+		<h3><strong>推荐的活动</strong></h3>
 	</div>
 	<div class="panel-body recommendation-panel-body">
 	    <ul class="list-group recommendation-panel-list-group">
             <volist name="rlist" id="weibo">
                 <li class="list-group-item" id="recommend_weibo_{$weibo.id}">
-	                <a href="#" class="pull-left"><img src="__PUBLIC__/Usercenter/image/year_of_monkey_48px_1168430_easyicon.net.png"/></a>
+	                <a href="#" class="pull-left"><img src="{$weibo.user.avatar64}" alt="image" style="width: 50px;border-radius: 20px;"/></a>
+	                <span>{$weibo.content}</span>
 	                <a href="#" class="pull-right">Zhujiahao</a>
                 </li>
             </volist> 

@@ -1,0 +1,23 @@
+body{
+	padding-top: 80px;
+}
+
+.lease-nav-tabs span{
+	font-size: 60px;
+}
+
+
+#select_goodsfile_btn{
+  margin-top: 10px;
+}
+#goodsform_submit_btn{
+	width: 100%;
+	border-radius: 10px;
+	font: "book antiqua";
+	font-size: 20px;
+	
+}
+
+
+
+

@@ -62,7 +62,7 @@
       		$map['_string']='uid!='.$uid.'';
 			$model=$this->weiboModel;
 			$list=$model->field('id')->where($map)->order('support_count desc')->limit(5)->select();
-			foreach($list as &$e['id']){
+			foreach($list as &$e){
 				$e=$this->getWeiboStructure($e['id']);
 			}
 			unset($e);
@@ -74,8 +74,12 @@
 		{
 			$this->requireLogin();
 			$this->requireSendInterval();
+			
+			if($feed_data['attach_id']){
+			    $type="image";	
+			}
 			//write into database
-			$weibo_id=$this->weiboModel->addWeibo(get_uid(),$content,$type,serialize($feed_data),$from);
+			$weibo_id=$this->weiboModel->addWeibo(get_uid(),$content,$type,$feed_data,$from);
 			if(!$weibo_id){
 				throw new ApiException("failed send".$this->weiboModel->getError());
 			}
@@ -149,20 +153,23 @@
 		$weibo=S('weibo_'.$id);
 		if(Empty($weibo)){
 			$weibo=$this->weiboModel->find($id);
-			$weibo_data=unserialize($weibo['data']);
-			$fetchContent="<p class='word-wrap'>".parse_weibo_content($weibo['content'])."</p>";
+			
+			$weibo_data = unserialize($weibo['data']);
+			$fetchContent="<p class='word-wrap' style='font-size: 30px;font-weight: 500'>".parse_weibo_content($weibo['content'])."</p>";
 			$weibo = array(
                 'id' => intval($weibo['id']),
                 'content' => strval($weibo['content']),
                 'create_time' => intval($weibo['create_time']),
                 'type' => $weibo['type'],
-                'data' => unserialize($weibo['data']),
+                'data'=>unserialize($weibo['data']),
                 'weibo_data' => $weibo_data,
                 'comment_count' => intval($weibo['comment_count']),
                 'repost_count' => intval($weibo['repost_count']),
                 'support_count'=>intval($weibo['support_count']),
                 'can_delete' => 0,
-                //'user' => $this->getUserStructure($weibo['uid']),
+                'is_attachimg'=>0,
+                'imgurl'=>getWeiboattachimg($weibo_data['attach_id']),
+                'user' => $this->getUserStructure($weibo['uid']),
                 'is_top' => $weibo['is_top'],
                 'uid' => $weibo['uid'],
                 'fetchContent' => $fetchContent,
@@ -171,6 +178,9 @@
 			S('weibo_' . $id, $weibo);
 		}
 		$weibo['can_delete']=$this->canDeleteWeibo($weibo);
+		if($weibo_data['attach_id']){
+			 $weibo['is_attachimg']=1;
+		}
         return $weibo;
 	}
 		//获取评论架构

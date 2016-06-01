@@ -1,6 +1,4 @@
-body{
-	background-color: #38566F;
-}
+
 .userprofile-settings-list-group li{
 font-size: 25px;	
 font-weight: bold;
@@ -13,7 +11,7 @@ color: #878A85;
 }
 
 .user-profilecard-heading img{
- 	border-radius: 50%;
+ 	border-radius: 10px;
 }
 .user-profilecard-footer{
 	

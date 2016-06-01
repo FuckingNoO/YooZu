@@ -2,20 +2,17 @@
 <!--Avatar-->
     <div class="col-md-2 col-sm-2 col-xs-12 text-center" style="position: relative;">
     	<a href="javascript:void(0);" id="user_avatar_<?php echo ($weibo["id"]); ?>">
-    		<img src="/xiangmu/YooZu/Public/home/image/nobody.jpg" width="90px" height="90px"/>	
+    		<img src="<?php echo ($weibo["user"]["avatar128"]); ?>" style="width: 90px; border-radius: 20px;"/>
     	</a>
     </div> 
-
 <!--Content-->
     <div class="col-md-10 col-sm-10 col-xs-12 panel panel-default" id="weibo_content_list">
     	<div class="panel-heading row">
-    		<p>nihao</p>
+    		<p style="font-size: 20px;">斑马斑马</p>
     	</div>
     	
     	<div class="panel-body row">
-    		<a>
-    			<img alt="image" src="/xiangmu/YooZu/Public/Usercenter/image/proxy.jpg" width="100%" height="100%"/>
-    		</a>
+    		<?php if($weibo.is_attachimg): ?><a href="javascript:void(0);"><img src="<?php echo ($weibo["imgurl"]); ?>" width="100%" height="100%"/></a><?php endif; ?>
     		<?php echo ($weibo["fetchContent"]); ?>
     	</div>
     	<div class="panel-footer row">
@@ -31,7 +28,7 @@
   </ul>
   <script>
   	$('#weibo_delete_'+'<?php echo ($weibo["id"]); ?>').click(function(){
-    	$.post('/xiangmu/YooZu/index.php/Usercenter/Profile/dodeleteWeibo',{weiboid:'<?php echo ($weibo["id"]); ?>'},function(result){
+    	$.post('/xiangmu/YooZu/index.php/Usercenter/Public/dodeleteWeibo',{weiboid:'<?php echo ($weibo["id"]); ?>'},function(result){
     		if(result.status==1){
     			alert(result.info);
     			$('#weibo_'+'<?php echo ($weibo["id"]); ?>').empty();
@@ -53,12 +50,21 @@
     $(function(){
 			$('#user_avatar_'+'<?php echo ($weibo["id"]); ?>').webuiPopover({
 				trigger:'hover',
-				placement: 'right',
+				placement: 'auto',
 				container:'#user_avatar_'+'<?php echo ($weibo["id"]); ?>',
-				content:'1234567891011111111111',
+				title:'title',
+				type:'async',
+                url:'https://api.github.com/',
+                content:function(data){
+                            var html = '<ul>';
+                            for(var key in data){html+='<li>'+data[key]+'</li>';}
+                            html+='</ul>';
+                            return html;
+                },
 				offsetTop:70,// offset the top of the popover
                 offsetLeft:20,
                 animation:'pop',
+                arrow:false,
                 multi:true,
 			   });
 			});

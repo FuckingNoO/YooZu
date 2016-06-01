@@ -24,7 +24,7 @@ class UcenterMemberModel extends Model{
 		array('email', 'email', "the email format is invalid!", self::EXISTS_VALIDATE), //邮箱格式不正确
 		array('email', '1,32', "the email length is invalid!", self::EXISTS_VALIDATE, 'length'), //邮箱长度不合法
 		array('email', 'checkDenyEmail', "the email is banned!", self::EXISTS_VALIDATE, 'callback'), //邮箱禁止注册
-		//array('email', '', "this email address already exists!", self::EXISTS_VALIDATE, 'unique'), //邮箱被占用
+		array('email', '', "this email address already exists!", self::EXISTS_VALIDATE, 'unique'), //邮箱被占用
 		
 		/* 验证手机号码 
 		array('mobile', '//', -9, self::EXISTS_VALIDATE), //手机格式不正确 TODO:

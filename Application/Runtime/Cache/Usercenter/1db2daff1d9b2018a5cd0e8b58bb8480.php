@@ -21,6 +21,7 @@
 
 <!-- 为了让html5shiv生效，请将所有的CSS都添加到此处 -->
 <link type="text/css" rel="stylesheet" href="/xiangmu/YooZu/Public/static/bootstrap/css/bootstrap.min.css"/>	
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/xiangmu/YooZu/Public/home/css/sticky-footer.css"/>	
 <link rel="stylesheet" type="text/css" href="/xiangmu/YooZu/Public/static/WebUIpopover/css/jquery.webui-popover.min.css"/>
 <!--Bootstrap Lib js-->
@@ -56,7 +57,8 @@
 	    <script type="text/javascript" src="/xiangmu/YooZu/Public/static/browser/jquery.browser.js"></script>
 	    <script type="text/javascript" src="/xiangmu/YooZu/Public/static/form/jquery.form.js"></script>
 	</head>
-	 <nav class="navbar navbar-default navbar-fixed-top">
+	
+ <nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -66,7 +68,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><img src="/xiangmu/YooZu/Public/Usercenter/image/year_of_monkey_48px_1168430_easyicon.net.png"/></a>
+      <a class="navbar-brand" href="#"><span class="fa fa-foursquare" aria-hidden="true" style="font-size: 60px; color: #00FFFF;"></span></a>
     </div>
      
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -78,14 +80,14 @@
         <button type="submit" class="btn btn-default">GO</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<?php echo U('Public/userfp',array('uid'=>get_uid()));?>"><img src="/xiangmu/YooZu/Public/Usercenter/image/home_48px_1196787_easyicon.net.png"></a></li>
-        <li><a href="<?php echo U('Lease/lease');?>"><img src="/xiangmu/YooZu/Public/Usercenter/image/Bicycle_48px_1177189_easyicon.net.png"/></a></li>
-        <li><a href="#" class="navbar-chatting-model"><img src="/xiangmu/YooZu/Public/Usercenter/image/speech_balloon_49.088659793814px_1196235_easyicon.net.png"/></a></li>
+        <li><a href="<?php echo U('Public/userfp',array('uid'=>get_uid()));?>"><span class="fa fa-university" aria-hidden="true" style="font-size: 60px;"></span></a></li>
+        <li><a href="<?php echo U('Lease/lease');?>"><span class="fa fa-bicycle" aria-hidden="trues" style="font-size: 60px;"></span></a></li>
+        <li><a href="#" class="navbar-chatting-model"><span class="fa fa-comments" aria-hidden="true" style="font-size: 60px;"></span></a></li>
         <li class="dropdown">
-        	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/xiangmu/YooZu/Public/Usercenter/image/email_67.505016722408px_1197077_easyicon.net.png"></a>
+        	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-envelope-o" aria-hidden="true" style="font-size: 60px;"></span></a>
         </li>
-        <li><a href="<?php echo U('Profile/profile',array('uid'=>get_uid()));?>"><img src="/xiangmu/YooZu/Public/Usercenter/image/user_man_setting_48px_1174256_easyicon.net.png"></a></li>
-        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#sendblock"><img src="/xiangmu/YooZu/Public/Usercenter/image/Pencil_47.900207900208px_1190350_easyicon.net.png"></a></li>
+        <li><a href="<?php echo U('Profile/profile',array('uid'=>get_uid()));?>"><span class="fa fa-cog" aria-hidden="true" style="font-size: 60px;"></span></a></li>
+        <li><a href="javascript:void(0)" data-toggle="modal" data-target="#sendblock"><span class="fa fa-pencil" aria-hidden="true" style="font-size: 60px;color: #00FFFF;"></span></a></li>
       </ul>
         </div>
     </div>
@@ -94,24 +96,35 @@
  
 	<body>
 		    <!--Modal-->
-     	<div class="fade modal" id="sendblock">
-		<div class="modal-content container">
+  
+     	<div class="fade modal" id="sendblock" tabindex="-1" role="dialog" aria-labelledby="mysendModalLabel">
+		<div class="modal-dialog">
+		  <div class="modal-content">	
 			<div class="modal-header">
-				<h4 style="text-align: center;">hello,write something here! :D</h4>
+				<p class="text-muted" style="font-size: 30px; text-align: center;">hello,write something here!</p>
 			</div>
 			<div class="modal-body">
 				<form role="form">
                     <div class="form-group">
-                        <label for="comment">write something here</label>
-                        <textarea name="content" class="form-control" rows="5" id="weibo_post_content"></textarea>
+                        <textarea name="content" class="form-control" rows="5" id="weibo_post_content" placeholder="发表些什么吧.........."></textarea>
                      </div>
                 </form>
+              <!--显示图片的区域-->  
+        <div id="uploadimg-div" style="display: none;">
+        	<div class="thumbnails">
+        	    <img class="thumbnails" id="upload-weibo-image" style="width: 100%;"/>
+        	</div>
+        </div>        
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default" id="add_picture_btn"><span class="glyphicon glyphicon-picture"></span></button>
-				<button type="button" class="btn btn-default" id="weibo_post_btn">send</button>
+		      <ul class="pull-left">		
+				     <?php echo W('InsertImage/insertImage');?>
+				     <?php echo W('InsertFace/insertFace');?>
+		      </ul>	
+				<button type="button" class="btn btn-info btn-lg" id="weibo_post_btn">发送</button>
 			</div>
 	    </div>
+	  </div> 
 	</div>
 	<!--Session block-->
 	<div id="sessionblock">
@@ -122,6 +135,7 @@
 	</div>
 	<!--js block-->
 	<script>
+
 	$('.navbar-chatting-model').webuiPopover({
 		placement:'auto',
 		container: '.navbar-chatting-model',
@@ -199,13 +213,19 @@
 							</li>
 							<li class="list-group-item"><span class="">修改头像</span>
 								<a data-toggle="collapse" href="#collapse3"><span class="badge pull-right">编辑</span></a>
-                                <div id="collapse3" class="panel-collapse collapse">
+                                <style>
+        .jcrop-holder > div > div {
+            border-radius: 50%;
+        }
+</style>
+<?php $user = query_user(array('avatar128')); ?>
+<div id="collapse3" class="panel-collapse collapse">
   <div class="panel-body">
     <div class="panel-body-rightcolumn">
       <div class="row">
         <div class="panel-body-leftcolumn col-lg-6 col-md-6">
           <h3>当前头像</h3>
-          <img src="/xiangmu/YooZu/Public/Usercenter/image/012.jpg" alt="" width="100px" height="100px"/>
+          <img src="<?php echo ($user["avatar128"]); ?>" alt="" width="100px" height="100px"/>
         </div>
       <div class="panel-body-rightcolumn col-lg-6 col-md-6">
           <h4>设置新头像</h4>
@@ -213,17 +233,16 @@
           <form id="avatar_form" enctype="multipart/form-data" action="/xiangmu/YooZu/index.php/Usercenter/Editor/doUploadAvatar" method="post">
              <p class="hide"><input type="file" name="image" class="avatar-input"/></p>
             <div class="btn btn-primary" id="select_avatar_btn">更换头像</div>
-            <!--<input type="submit" value="submit" id="submit_btn"/>-->
             <p class="text-error" id="submitTip"></p>
           </form>
           <p id="upload_tip" class="text-danger"></p>
           <div id="uploaded_image_div" style="display: none;">
           		<div class="thumbnail">
-                    <img id="uploaded_image" style="width: 100%;" class="thumbnails"/>
+                    <img id="uploaded_image" style="max-width: 100%;" class="thumbnails"/>
                 </div>
                 <p class="text-danger" id="save_avatar_tip"></p>
                 <p>
-                  <a class="btn btn-primary" id="save_avatar_button" data-url="<?php echo U('UserCenter/Config/doCropAvatar');?>">选区裁剪后保存头像</a>
+                  <a class="btn btn-primary" id="save_avatar_button" data-url="<?php echo U('Usercenter/Editor/doCropAvatar');?>">选区裁剪后保存头像</a>
                 </p>
           </div>
       </div>
@@ -232,7 +251,11 @@
 </div>
 </div>
   <script type="text/javascript">
+    var temp;
   $(function(){
+  	var crop;
+  	var jcrop_api;
+  	
     	$('#select_avatar_btn').click(function(){
     		$('.avatar-input').trigger('click');
     	});
@@ -241,7 +264,7 @@
           	$(this).parent().submit();
           });
            
-      $('#avatar_form').on('submit',function(e){
+      $('#avatar_form').on('submit',function(e){ 
       		e.preventDefault();
       		
       		$.ajax(this.action, {
@@ -250,6 +273,7 @@
                     processData: false
       		}).complete(function(data) {
       			 var json=data.responseJSON;
+      			 
       			 $('#avatar_form').trigger('onJson',[json]);
       		});
       	});
@@ -276,9 +300,45 @@
                     });
                 })
       	});
+      	
+      	function showAvatarTip(a){
+      		$('#save_avatar_button').text(a);
+      	}
+      	
       	function updateCoordinate(c) {
                 crop = c;
             }
+      	
+      		
+      	$('#save_avatar_button').click(function(){
+      		   if(crop.w==undefined||crop.w==0){
+      		   	$('#save_avatar_tip').text('请先选出您需要的部分');
+      		   	return ;
+      		   }
+      		    
+                //显示正在保存
+                $(this).text('正在保存');
+                $(this).addClass('disabled');
+
+                //隐藏错误消息
+                showAvatarTip('');
+                
+                var url=$(this).attr('data-url');
+                var imageWidth=$('.jcrop-holder img').width();
+                var imageHeight=$('.jcrop-holder img').height();
+                var mycrop=crop.x / imageWidth + ',' + crop.y / imageHeight + ',' + crop.w / imageWidth + ',' + crop.h / imageHeight;
+                $.post(url,{crop:mycrop},function(data){
+                	if(data.status==1){
+                		window.location.href = data.url;
+                	}else{
+                	showAvatarTip(data.info);
+                  //恢复按钮
+                  $('#save_avatar_button').text('保存头像');
+                  $('#save_avatar_button').removeClass('disabled');
+                  }
+                });
+                
+      	});
   
   });
   </script>                             
@@ -294,17 +354,61 @@
                     <img src="/xiangmu/YooZu/Public/Usercenter/image/003.jpg" alt="" width="200px" height="100px"/>
             </div>
         <div class="panel-body-rightcolumn col-lg-6 col-md-6">
-        <h4>设置新背景</h4>
-        <p class="text-muted">支持jpg，png，gif，bmp等格式，可以在大照片中裁剪比较满意的部分</p>
-        <div class="btn btn-primary" id="select_bg_btn">更换背景</div>
+            <h4>设置新背景</h4>
+            <p class="text-muted">支持jpg，png，gif，bmp等格式，可以在大照片中裁剪比较满意的部分</p>
+            <form action="/xiangmu/YooZu/index.php/Usercenter/Editor/doUploadAvatar" method="post" enctype="multipart/form-data" id="bg-form">
+            <p class="hide"><input type="file" name="image" class="bg-input"/></p>
+            <div class="btn btn-primary" id="select_bg_file">更换背景</div>
+        </form>
+         <p class="bg-text-error"></p>
+        <div id="bg-uploaded-div" style="display: none;">
+         <div class="thumbnails">	
+        	<img id="upload_bg_img" style="max-width: 100%;" class="thumbnails"/>
+        </div>	
+        	<p class="bg-text-danger"></p>
+        	<div class="btn btn-default" id="select_bg_btn">保存背景</div>
+        </div>	
          </div>
     </div>   
 </div>
 </div>
 <script type="text/javascript">
-		$('#select_bg_btn').click(function(){
-	            $('[name=image]').trigger('click');
-			});
+$(function(){
+		
+	$('#select_bg_file').click(function(){
+	    $('.bg-input').trigger('click');
+	});
+	
+	$('.bg-input').change(function(){
+		$('#bg-form').submit();
+	});
+	
+	$('#bg-form').on('submit',function(e){
+		e.preventDefault();
+		
+		$.ajax(this.action,{
+			files:$(':file',this),
+			iframe:true,
+			processdata:false
+		}).complete(function(data){
+			var json=data.responseJSON;
+			$('#bg-form').trigger('onJson',[json]);
+		});
+	});
+	     $('#bg-form').bind('onJson',function(e,json){
+	     	if(!json.success){
+	     		$('.bg-text-error').text(json.message); 
+	     	}
+	     	$('#bg-form').hide();
+	     	$('#upload_bg_img').attr('src',json.image);
+	     	$('#bg-uploaded-div').show();
+	     });
+	     
+	     $('#select_bg_btn').on('click',function(){
+	     	window.location.href=location.href;
+	     });
+	
+});
 </script>
 
 							</li>

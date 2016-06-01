@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit(); if(is_array($entertainment)): $i = 0; $__LIST__ = $entertainment;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$egood): $mod = ($i % 2 );++$i; echo W('GoodDetail/detail',array('good'=>$egood)); endforeach; endif; else: echo "" ;endif; ?>

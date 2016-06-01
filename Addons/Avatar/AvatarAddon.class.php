@@ -232,7 +232,7 @@ class AvatarAddon extends Addon
                 return false;
             }
 
-            //确认头像足够大
+//          //确认头像足够大
             if ($height < 128) {
                 $this->error = '头像太小';
                 return false;

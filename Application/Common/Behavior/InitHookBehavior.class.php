@@ -9,8 +9,9 @@ defined('THINK_PATH') or exit();
 // 初始化钩子信息
 class InitHookBehavior extends Behavior {
 
-    // 行为扩展的执行入口必须是run
+   // 行为扩展的执行入口必须是run
     public function run(&$content){
+        if(defined('BIND_MODULE') && BIND_MODULE === 'Install') return;
 
         $data = S('hooks');
         if(!$data){
@@ -18,7 +19,7 @@ class InitHookBehavior extends Behavior {
             foreach ($hooks as $key => $value) {
                 if($value){
                     $map['status']  =   1;
-                    $names = explode(',',$value);
+                    $names          =   explode(',',$value);
                     $map['name']    =   array('IN',$names);
                     $data = M('Addons')->where($map)->getField('id,name');
                     if($data){

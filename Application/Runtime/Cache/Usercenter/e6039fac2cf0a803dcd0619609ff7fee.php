@@ -26,7 +26,7 @@
                 var  xOffset = 20;  
                 var  yOffset = 25;  
                 $('#comment_block_'+'<?php echo ($weiboId); ?>').css("display","block").css("position","absolute").css("top",(mousePos.y - yOffset) + "px").css("left",(mousePos.x + xOffset) + "px");
-   		        $.post('/xiangmu/YooZu/index.php/Usercenter/Profile/loadComment',{weibo_id:'<?php echo ($weiboId); ?>'},function(result){ 
+   		        $.post('/xiangmu/YooZu/index.php/Usercenter/Public/loadComment',{weibo_id:'<?php echo ($weiboId); ?>'},function(result){ 
                        if(result.status==0){
                        	$('#comment_list_'+'<?php echo ($weiboId); ?>').text('no comments! :D');}
                        else{
@@ -37,7 +37,7 @@
           //send comment btn
       		$('#cmt_send_btn_'+'<?php echo ($weiboId); ?>').click(function(){
       			var commentcount=$('#comment_btn_'+'<?php echo ($weiboId); ?>').attr('comment-count');
-      			    $.post('/xiangmu/YooZu/index.php/Usercenter/Profile/dosendComment',
+      			    $.post('/xiangmu/YooZu/index.php/Usercenter/Public/dosendComment',
       			   {
       				weibo_id:'<?php echo ($weiboId); ?>',
       				content:$('#commentpostcontent_'+'<?php echo ($weiboId); ?>').val(),

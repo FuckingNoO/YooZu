@@ -1,10 +1,18 @@
+<style>
+        .jcrop-holder > div > div {
+            border-radius: 50%;
+        }
+</style>
+<php>
+	$user = query_user(array('avatar128'));
+</php>
 <div id="collapse3" class="panel-collapse collapse">
   <div class="panel-body">
     <div class="panel-body-rightcolumn">
       <div class="row">
         <div class="panel-body-leftcolumn col-lg-6 col-md-6">
           <h3>当前头像</h3>
-          <img src="__PUBLIC__/Usercenter/image/012.jpg" alt="" width="100px" height="100px"/>
+          <img src="{$user.avatar128}" alt="" width="100px" height="100px"/>
         </div>
       <div class="panel-body-rightcolumn col-lg-6 col-md-6">
           <h4>设置新头像</h4>
@@ -12,17 +20,16 @@
           <form id="avatar_form" enctype="multipart/form-data" action="__URL__/doUploadAvatar" method="post">
              <p class="hide"><input type="file" name="image" class="avatar-input"/></p>
             <div class="btn btn-primary" id="select_avatar_btn">更换头像</div>
-            <!--<input type="submit" value="submit" id="submit_btn"/>-->
             <p class="text-error" id="submitTip"></p>
           </form>
           <p id="upload_tip" class="text-danger"></p>
           <div id="uploaded_image_div" style="display: none;">
           		<div class="thumbnail">
-                    <img id="uploaded_image" style="width: 100%;" class="thumbnails"/>
+                    <img id="uploaded_image" style="max-width: 100%;" class="thumbnails"/>
                 </div>
                 <p class="text-danger" id="save_avatar_tip"></p>
                 <p>
-                  <a class="btn btn-primary" id="save_avatar_button" data-url="{:U('UserCenter/Config/doCropAvatar')}">选区裁剪后保存头像</a>
+                  <a class="btn btn-primary" id="save_avatar_button" data-url="{:U('Usercenter/Editor/doCropAvatar')}">选区裁剪后保存头像</a>
                 </p>
           </div>
       </div>
@@ -31,7 +38,11 @@
 </div>
 </div>
   <script type="text/javascript">
+    var temp;
   $(function(){
+  	var crop;
+  	var jcrop_api;
+  	
     	$('#select_avatar_btn').click(function(){
     		$('.avatar-input').trigger('click');
     	});
@@ -40,7 +51,7 @@
           	$(this).parent().submit();
           });
            
-      $('#avatar_form').on('submit',function(e){
+      $('#avatar_form').on('submit',function(e){ 
       		e.preventDefault();
       		
       		$.ajax(this.action, {
@@ -76,9 +87,45 @@
                     });
                 })
       	});
+      	
+      	function showAvatarTip(a){
+      		$('#save_avatar_button').text(a);
+      	}
+      	
       	function updateCoordinate(c) {
                 crop = c;
             }
+      	
+      		
+      	$('#save_avatar_button').click(function(){
+      		   if(crop.w==undefined||crop.w==0){
+      		   	$('#save_avatar_tip').text('请先选出您需要的部分');
+      		   	return ;
+      		   }
+      		    
+                //显示正在保存
+                $(this).text('正在保存');
+                $(this).addClass('disabled');
+
+                //隐藏错误消息
+                showAvatarTip('');
+                
+                var url=$(this).attr('data-url');
+                var imageWidth=$('.jcrop-holder img').width();
+                var imageHeight=$('.jcrop-holder img').height();
+                var mycrop=crop.x / imageWidth + ',' + crop.y / imageHeight + ',' + crop.w / imageWidth + ',' + crop.h / imageHeight;
+                $.post(url,{crop:mycrop},function(data){
+                	if(data.status==1){
+                		window.location.href = data.url;
+                	}else{
+                	showAvatarTip(data.info);
+                  //恢复按钮
+                  $('#save_avatar_button').text('保存头像');
+                  $('#save_avatar_button').removeClass('disabled');
+                  }
+                });
+  
+      	});
   
   });
   </script>                             
