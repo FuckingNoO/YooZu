@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit();?><div class="row" id="good_<?php echo ($good["id"]); ?>" style="margin-top: 20px;">
+<?php if (!defined('THINK_PATH')) exit();?><div class="row" id="good_<?php echo ($good["id"]); ?>" style="margin-top: 20px;" data-url="<?php echo U('Public/profilecard',array($good[id]));?>">
 	
 	<!--用于显示用户的信息与头像-->
 	<div class="col-md-3 col-sm-3">
@@ -20,3 +20,24 @@
   	</div>
   </div>
 </div>
+
+<script type="text/javascript">
+	$(function(){
+
+        //调用悬浮框插件
+		$('#good_useravatar_<?php echo ($good["id"]); ?>').webuiPopover({
+		    trigger:'hover',
+			placement: 'bottom-right',
+			container:'#good_useravatar_<?php echo ($good["id"]); ?>',
+			type:'async',
+            url:$('#good_<?php echo ($good["id"]); ?>').attr('data-url'),
+		    offsetTop:70,// offset the top of the popover
+            offsetLeft:20,
+            animation:'pop',
+            arrow:false,
+            multi:true,
+            width:400,
+            padding:false,
+    });
+});
+</script>

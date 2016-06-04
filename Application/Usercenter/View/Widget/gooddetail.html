@@ -1,4 +1,4 @@
-<div class="row" id="good_{$good.id}" style="margin-top: 20px;">
+<div class="row" id="good_{$good.id}" style="margin-top: 20px;" data-url="{:U('Public/profilecard',array($good[id]))}">
 	
 	<!--用于显示用户的信息与头像-->
 	<div class="col-md-3 col-sm-3">
@@ -20,3 +20,24 @@
   	</div>
   </div>
 </div>
+
+<script type="text/javascript">
+	$(function(){
+
+        //调用悬浮框插件
+		$('#good_useravatar_{$good.id}').webuiPopover({
+		    trigger:'hover',
+			placement: 'bottom-right',
+			container:'#good_useravatar_{$good.id}',
+			type:'async',
+            url:$('#good_{$good.id}').attr('data-url'),
+		    offsetTop:70,// offset the top of the popover
+            offsetLeft:20,
+            animation:'pop',
+            arrow:false,
+            multi:true,
+            width:400,
+            padding:false,
+    });
+});
+</script>

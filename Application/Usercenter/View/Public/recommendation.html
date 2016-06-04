@@ -1,15 +1,48 @@
-<div class="panel panel-default" style="padding: 10px;">
+<div class="panel panel-default recommendation-panel">
 	<div class="panel-heading recommendation-panel-heading">
 		<h3><strong>推荐的活动</strong></h3>
 	</div>
 	<div class="panel-body recommendation-panel-body">
 	    <ul class="list-group recommendation-panel-list-group">
             <volist name="rlist" id="weibo">
-                <li class="list-group-item" id="recommend_weibo_{$weibo.id}">
-	                <a href="#" class="pull-left"><img src="{$weibo.user.avatar64}" alt="image" style="width: 50px;border-radius: 20px;"/></a>
-	                <span>{$weibo.content}</span>
-	                <a href="#" class="pull-right">Zhujiahao</a>
+                <li class="list-group-item recommendation-group" id="recommend_weibo_{$weibo.id}" data-url = "{:U('Public/profilecard',array('weibo'=>$weibo[id]))}">
+	                <a href="#" id="recommendation-uavatar-{$weibo.id}"><img src="{$weibo.user.avatar64}"/></a>
+	                <span class="list-group-item-weibocontent">{$weibo.content}</span>
+	                <span class="fa fa-plus-square btn pull-right" id="plus_{$weibo.id}" aria-hidden="true" style="font-size: 45px;color: #999999;"></span>
                 </li>
+    <script type="text/javascript"> 
+    $(function(){
+        $('#recommendation-uavatar-{$weibo.id}').webuiPopover({
+			trigger:'hover',
+			placement: 'bottom',
+			container:'#recommendation-uavatar-{$weibo.id}',
+			type:'async',
+            url:$('#recommend_weibo_{$weibo.id}').attr('data-url'),
+		    offsetTop:40,// offset the top of the popover
+            offsetLeft:20,
+            animation:'pop',
+            arrow:false,
+            width:400,
+            padding:false,
+		});
+		
+		$('#plus_{$weibo.id}').mouseover(function(){
+			$(this).css('color','#787878');
+		});
+		$('#plus_{$weibo.id}').mouseleave(function(){
+			
+			$(this).css('color','#999999');
+		});
+		
+		$('#recommend_weibo_{$weibo.id}').mousemove(function(){
+			$(this).css('background-color','#253E5A');
+		});
+		
+		$('#recommend_weibo_{$weibo.id}').mouseleave(function(){
+			$(this).css('background-color','#36465d');
+		});
+    });
+		</script>
             </volist> 
         </ul>
     </div>

@@ -180,6 +180,8 @@ $(function(){
 
 		<div class="container">
 			<div class="row">
+				
+		    <!------------------------广告位TODO---------------------------------------------------------->
 			<div class="usc_left_column-weibo col-sm-8 col-md-8">
 				<div id="weibo_list">
 					<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$weibo): $mod = ($i % 2 );++$i; echo W('WeiboDetail/detail',array('weibo'=>$weibo)); endforeach; endif; else: echo "" ;endif; ?>
@@ -194,21 +196,66 @@ $(function(){
 			
 			<!--user's information list-->
 			<div class="usc_right_column-recommendation col-sm-4 col-md-4">
-			   <div class="panel panel-default" style="padding: 10px;">
+			   <div class="panel panel-default recommendation-panel">
 	<div class="panel-heading recommendation-panel-heading">
 		<h3><strong>推荐的活动</strong></h3>
 	</div>
 	<div class="panel-body recommendation-panel-body">
 	    <ul class="list-group recommendation-panel-list-group">
-            <?php if(is_array($rlist)): $i = 0; $__LIST__ = $rlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$weibo): $mod = ($i % 2 );++$i;?><li class="list-group-item" id="recommend_weibo_<?php echo ($weibo["id"]); ?>">
-	                <a href="#" class="pull-left"><img src="<?php echo ($weibo["user"]["avatar64"]); ?>" alt="image" style="width: 50px;border-radius: 20px;"/></a>
-	                <span><?php echo ($weibo["content"]); ?></span>
-	                <a href="#" class="pull-right">Zhujiahao</a>
-                </li><?php endforeach; endif; else: echo "" ;endif; ?> 
+            <?php if(is_array($rlist)): $i = 0; $__LIST__ = $rlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$weibo): $mod = ($i % 2 );++$i;?><li class="list-group-item recommendation-group" id="recommend_weibo_<?php echo ($weibo["id"]); ?>" data-url = "<?php echo U('Public/profilecard',array('weibo'=>$weibo[id]));?>">
+	                <a href="#" id="recommendation-uavatar-<?php echo ($weibo["id"]); ?>"><img src="<?php echo ($weibo["user"]["avatar64"]); ?>"/></a>
+	                <span class="list-group-item-weibocontent"><?php echo ($weibo["content"]); ?></span>
+	                <span class="fa fa-plus-square btn pull-right" id="plus_<?php echo ($weibo["id"]); ?>" aria-hidden="true" style="font-size: 45px;color: #999999;"></span>
+                </li>
+    <script type="text/javascript"> 
+    $(function(){
+        $('#recommendation-uavatar-<?php echo ($weibo["id"]); ?>').webuiPopover({
+			trigger:'hover',
+			placement: 'bottom',
+			container:'#recommendation-uavatar-<?php echo ($weibo["id"]); ?>',
+			type:'async',
+            url:$('#recommend_weibo_<?php echo ($weibo["id"]); ?>').attr('data-url'),
+		    offsetTop:40,// offset the top of the popover
+            offsetLeft:20,
+            animation:'pop',
+            arrow:false,
+            width:400,
+            padding:false,
+		});
+		
+		$('#plus_<?php echo ($weibo["id"]); ?>').mouseover(function(){
+			$(this).css('color','#787878');
+		});
+		$('#plus_<?php echo ($weibo["id"]); ?>').mouseleave(function(){
+			
+			$(this).css('color','#999999');
+		});
+		
+		$('#recommend_weibo_<?php echo ($weibo["id"]); ?>').mousemove(function(){
+			$(this).css('background-color','#253E5A');
+		});
+		
+		$('#recommend_weibo_<?php echo ($weibo["id"]); ?>').mouseleave(function(){
+			$(this).css('background-color','#36465d');
+		});
+    });
+		</script><?php endforeach; endif; else: echo "" ;endif; ?> 
         </ul>
     </div>
 </div>
-
+			   <div class="panel weeklytalk-panel">
+			   	    <h3>每周话题</h3>
+			   	    <span class="weeklytalk-text-span"><p>你会做出什么选择？</p></span>
+			        <div class="weeklytalk-img-span">
+			            <a href="#" id="weeklytalk-img"><img src="/xiangmu/YooZu/Public/Usercenter/image/giphy.gif"/></a>	
+			        </div>
+			        <div class="weeklytalk-option-div panel">
+			        	<div class="panel-body">
+			        	<a href=""><span class="fa fa-thumbs-o-up pull-left"><i class="weeklytalk-support-count">:3</i></span></a>
+			        	<a href=""><span class="fa fa-thumbs-down pull-right"><i class="weeklytalk-dismiss-count">:4</i></span></a>
+			        	</div>
+			        </div>
+			   </div>
 			</div>
 		</div>
 		</div>

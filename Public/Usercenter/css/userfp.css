@@ -1,6 +1,13 @@
 body{
 padding-top: 70px;
 
+background-color: #36465d;
+}
+
+.container{
+	
+	width: 1300px;
+	
 }
 a:link{
  text-decoration:none;
@@ -22,6 +29,122 @@ text-decoration:none;
    
 .recommendation-panel-list-group li{
     height: 65px;
-}   
+} 
+
+.recommendation-panel{
+	padding: 0px;
+	border: none;
+	background-color: #36465d;
+}  
+
+.recommendation-panel h3{
+	color: #888888;
+}
+
+.recommendation-panel .panel-heading{
+	background-color: #36465d;
+	border-bottom-color: #888888;
+}
+
+.recommendation-group{
+	background-color: #36465d;	
+	border:none;
+	border-bottom: ridge;
+	border-bottom-color: (255, 255, 255, 0);
+	height: auto;
+	padding: 5px;
+}
+
+ .recommendation-group .fa-plus-square-o{
+ 	
+ 	
+ }
+
+.list-group-item-weibocontent{
+	
+	color: #888888;
+	font-size: 15px;
+
+}
+
+.recommendation-panel-list-group img{
+	height: 100%;
+	border-radius: 10px;
+}
+
+.weeklytalk-panel{
+	background-color: #36465d;
+}
+
+.weeklytalk-panel h3{
+	
+	padding: 0px;
+	color: #888888;
+	font-weight: 700;
+	
+}
+
+.weeklytalk-panel img{
+	width: 100%;
+	padding: 0px;
+	border-radius: 5px;
+}
+
+
+.weeklytalk-text-span p{
+	font-size: 20px;
+	font-weight: 600;
+	color: #888888;
+}
+
+.weeklytalk-option-div{
+	padding: 0;
+	height: 50px;
+	margin-top: 15px;
+	border-radius: 5px;
+}
+
+.weeklytalk-option-div span{
+	font-size: 30px;
+	color: #808080;
+	margin-top: 0;
+	margin-left: 60px;
+	margin-right: 60px;
+}
+
+.weibo_user_avatar {
+	width: 90px; 
+	border-radius: 10px;
+}
+
+.weibo-content-panel{
+	padding-left: 0px;
+	padding-right: 0px;
+	border-radius: 10px;
+}
+
+.weibo-content-panel-body{
+	padding: 0px;
+}
+
+.weibo_title{
+	
+	font: "agency fb";
+	font-size: 20px;
+	margin-left: 10px;
+	color: #888888;
+	font-weight: 400;
+}
+
+.weibo-content-panel-heading{
+	padding: 0px;
+	
+}
+
+.weibo_ftContent{
+	margin-left: 10px;
+	
+}
+
     	
     	

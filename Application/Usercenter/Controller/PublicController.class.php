@@ -2,6 +2,8 @@
 namespace Usercenter\Controller;
 use Think\Controller;
 use Weibo\Api\WeiboApi;
+use Common\Api\FriendApi;
+use Common\Model;
 use Think\Hook;
 
 class PublicController extends Controller {
@@ -9,6 +11,7 @@ class PublicController extends Controller {
 	
 	public function _initialize()
 	{
+		 $this->friendApi=new FriendApi();
 	    $this->weiboApi=new WeiboApi();
 	}
 	
@@ -144,6 +147,29 @@ class PublicController extends Controller {
             exit;
 		}
 	
+	//从前端穿来的显示用户信息卡的请求
+	public function profilecard($weibo){
+		
+		$result=$this->weiboApi->getWeiboDetail($weibo);
+		
+		$this->assign('pw',$result['weibo']);
+	    
+		$this->display();
+	}
+	
+	//从前端传来添加好友请求
+	public function doaddFriendRequest($friendid,$uid){
+		
+		$info=$this->friendApi->isSendFriendRequestRepeatly(array('uid'=>$uid,'friendid'=>$friendid));
+		if(!$info){
+			$info=array('success'=>0,'message'=>'您已经发送过请求！');
+			$this->ajaxReturn(apiToAjax($info));
+		}
+		
+		    $result = $this->friendApi->addfriend(array(),$uid,$friendid);
+		    $this->ajaxReturn(apiToAjax($result));
+	
+	}
 	
 	
 	

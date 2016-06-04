@@ -155,7 +155,7 @@
 			$weibo=$this->weiboModel->find($id);
 			
 			$weibo_data = unserialize($weibo['data']);
-			$fetchContent="<p class='word-wrap' style='font-size: 30px;font-weight: 500'>".parse_weibo_content($weibo['content'])."</p>";
+			$fetchContent="<p class='word-wrap' style='font-size: 20px;font-weight: 400;color: #808080;'>".parse_weibo_content($weibo['content'])."</p>";
 			$weibo = array(
                 'id' => intval($weibo['id']),
                 'content' => strval($weibo['content']),

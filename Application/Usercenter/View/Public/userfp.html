@@ -11,9 +11,11 @@
 		<include file="Base/header" />
 		<div class="container">
 			<div class="row">
+				
+		    <!------------------------广告位TODO---------------------------------------------------------->
 			<div class="usc_left_column-weibo col-sm-8 col-md-8">
 				<div id="weibo_list">
-					<include file="Public/loadweibo" />
+					<include file="Public/loadweibo"/>
 				</div>
 				<div id="load_weibo" class="text-center text-muted">        
 					<p id="load_more_text">载入更多</p>
@@ -23,6 +25,19 @@
 			<!--user's information list-->
 			<div class="usc_right_column-recommendation col-sm-4 col-md-4">
 			   <include file="Public/recommendation"/>
+			   <div class="panel weeklytalk-panel">
+			   	    <h3>每周话题</h3>
+			   	    <span class="weeklytalk-text-span"><p>你会做出什么选择？</p></span>
+			        <div class="weeklytalk-img-span">
+			            <a href="#" id="weeklytalk-img"><img src="__PUBLIC__/Usercenter/image/giphy.gif"/></a>	
+			        </div>
+			        <div class="weeklytalk-option-div panel">
+			        	<div class="panel-body">
+			        	<a href=""><span class="fa fa-thumbs-o-up pull-left"><i class="weeklytalk-support-count">:3</i></span></a>
+			        	<a href=""><span class="fa fa-thumbs-down pull-right"><i class="weeklytalk-dismiss-count">:4</i></span></a>
+			        	</div>
+			        </div>
+			   </div>
 			</div>
 		</div>
 		</div>

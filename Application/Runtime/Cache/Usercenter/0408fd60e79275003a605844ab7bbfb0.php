@@ -78,7 +78,7 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<?php echo U('Public/userfp',array('uid'=>get_uid()));?>"><span class="fa fa-university" aria-hidden="true" style="font-size: 60px;"></span></a></li>
-        <li><a href="<?php echo U('Lease/lease');?>"><span class="fa fa-bicycle" aria-hidden="trues" style="font-size: 60px;"></span></a></li>
+        <li><a href="<?php echo U('Lease/lease',array('uid'=>get_uid()));?>"><span class="fa fa-bicycle" aria-hidden="trues" style="font-size: 60px;"></span></a></li>
         <li><a href="#" class="navbar-chatting-model"><span class="fa fa-comments" aria-hidden="true" style="font-size: 60px;"></span></a></li>
         <li class="dropdown">
         	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-envelope-o" aria-hidden="true" style="font-size: 60px;"></span></a>
@@ -160,8 +160,8 @@ $(function(){
 	 	$.post(Url,postdata,function(result){
 	 		if(result.status){
 //	 		handleAjax(result);
+      alert(result.info);
 	 		$('#weibo_post_content').val('');
-	 		alert(result.info);
 	 		setTimeout(function(){
 	 			$('#weibo_list').prepend(result.html);
 	 			$('#myWeibolist').prepend(result.html);

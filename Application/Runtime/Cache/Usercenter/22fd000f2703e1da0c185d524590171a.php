@@ -1,21 +1,23 @@
-<?php if (!defined('THINK_PATH')) exit();?><div class="row" id="weibo_<?php echo ($weibo["id"]); ?>">
+<?php if (!defined('THINK_PATH')) exit();?><div class="row" id="weibo_<?php echo ($weibo["id"]); ?>" data-url = "<?php echo U('Public/profilecard',array('weibo'=>$weibo[id]));?>">
 <!--Avatar-->
+<?php $url=U('Public/profilecard',array('weibo'=>$weibo)); ?>
     <div class="col-md-2 col-sm-2 col-xs-12 text-center" style="position: relative;">
     	<a href="javascript:void(0);" id="user_avatar_<?php echo ($weibo["id"]); ?>">
-    		<img src="<?php echo ($weibo["user"]["avatar128"]); ?>" style="width: 90px; border-radius: 20px;"/>
+    		<img src="<?php echo ($weibo["user"]["avatar128"]); ?>" class="weibo_user_avatar"/>
     	</a>
     </div> 
 <!--Content-->
-    <div class="col-md-10 col-sm-10 col-xs-12 panel panel-default" id="weibo_content_list">
-    	<div class="panel-heading row">
-    		<p style="font-size: 20px;">斑马斑马</p>
+    <div class="col-md-10 col-sm-10 col-xs-12 panel panel-default weibo-content-panel" id="weibo_content_list">
+    	<div class="panel-heading weibo-content-panel-heading">
+    		<p class="weibo_title" id="weibo_title_<?php echo ($weibo["id"]); ?>">斑马斑马</p>
     	</div>
     	
-    	<div class="panel-body row">
-    		<?php if($weibo.is_attachimg): ?><a href="javascript:void(0);"><img src="<?php echo ($weibo["imgurl"]); ?>" width="100%" height="100%"/></a><?php endif; ?>
-    		<?php echo ($weibo["fetchContent"]); ?>
+    	<div class="panel-body weibo-content-panel-body">
+    			<a href="javascript:void(0);"><img src="<?php echo ($weibo["imgurl"]); ?>" width="100%" height="100%" 
+    			<?php if($weibo["imgurl"] == null): ?>style="display :none;"<?php endif; ?>/></a>
+    		<div class="weibo_ftContent"><?php echo ($weibo["fetchContent"]); ?></div>
     	</div>
-    	<div class="panel-footer row">
+    	<div class="panel-footer">
     	  <div id="weibo_post_footer_content" class="pull-right">
     	  	<?php echo W('Support/support',array());?>
 <?php echo W('Repost/repost',array());?>
@@ -48,24 +50,20 @@
 <!--JS-->
      <script type="text/javascript">
     $(function(){
+    	//调用悬浮框插件
 			$('#user_avatar_'+'<?php echo ($weibo["id"]); ?>').webuiPopover({
 				trigger:'hover',
-				placement: 'auto',
+				placement: 'bottom-right',
 				container:'#user_avatar_'+'<?php echo ($weibo["id"]); ?>',
-				title:'title',
 				type:'async',
-                url:'https://api.github.com/',
-                content:function(data){
-                            var html = '<ul>';
-                            for(var key in data){html+='<li>'+data[key]+'</li>';}
-                            html+='</ul>';
-                            return html;
-                },
+                url:$('#weibo_<?php echo ($weibo["id"]); ?>').attr('data-url'),
 				offsetTop:70,// offset the top of the popover
                 offsetLeft:20,
                 animation:'pop',
                 arrow:false,
                 multi:true,
+                width:400,
+                padding:false,
 			   });
 			});
 	</script>

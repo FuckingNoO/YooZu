@@ -81,7 +81,7 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<?php echo U('Public/userfp',array('uid'=>get_uid()));?>"><span class="fa fa-university" aria-hidden="true" style="font-size: 60px;"></span></a></li>
-        <li><a href="<?php echo U('Lease/lease');?>"><span class="fa fa-bicycle" aria-hidden="trues" style="font-size: 60px;"></span></a></li>
+        <li><a href="<?php echo U('Lease/lease',array('uid'=>get_uid()));?>"><span class="fa fa-bicycle" aria-hidden="trues" style="font-size: 60px;"></span></a></li>
         <li><a href="#" class="navbar-chatting-model"><span class="fa fa-comments" aria-hidden="true" style="font-size: 60px;"></span></a></li>
         <li class="dropdown">
         	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-envelope-o" aria-hidden="true" style="font-size: 60px;"></span></a>
@@ -97,7 +97,7 @@
 	<body>
 		    <!--Modal-->
   
-     	<div class="fade modal" id="sendblock" tabindex="-1" role="dialog" aria-labelledby="mysendModalLabel">
+<div class="fade modal" id="sendblock" tabindex="-1" role="dialog" aria-labelledby="mysendModalLabel">
 		<div class="modal-dialog">
 		  <div class="modal-content">	
 			<div class="modal-header">
@@ -112,7 +112,7 @@
               <!--显示图片的区域-->  
         <div id="uploadimg-div" style="display: none;">
         	<div class="thumbnails">
-        	    <img class="thumbnails" id="upload-weibo-image" style="width: 100%;"/>
+        	    <img class="thumbnails" id="uploadweibo_image" style="width: 100%;"/>
         	</div>
         </div>        
 			</div>
@@ -135,7 +135,8 @@
 	</div>
 	<!--js block-->
 	<script>
-
+$(function(){
+	
 	$('.navbar-chatting-model').webuiPopover({
 		placement:'auto',
 		container: '.navbar-chatting-model',
@@ -151,24 +152,29 @@
 	 $("#weibo_post_btn").click(function(){
 	 	    var Url="/xiangmu/YooZu/index.php/Usercenter/Editor/accept_weibo";
 	 	    var postdata={
-	 		content:$("#weibo_post_content").val(),
+	 		  content:$("#weibo_post_content").val(),
+	 		  attach_id:$('#uploadweibo_image').attr('attach_id'),
 	 	};
-	 		postweibo(Url,postdata);}
-	 );
+	 		postweibo(Url,postdata);
+	 });
+	 
 	 function postweibo(Url,postdata)
 	 {
 	 	$.post(Url,postdata,function(result){
 	 		if(result.status){
 //	 		handleAjax(result);
+      alert(result.info);
 	 		$('#weibo_post_content').val('');
-	 		alert(result.info);
 	 		setTimeout(function(){
 	 			$('#weibo_list').prepend(result.html);
 	 			$('#myWeibolist').prepend(result.html);
 	 		},1000);
 	 	}
 	  });
+	  $('#uploadweibo_image').attr('attach_id','');
 	 }
+	 
+	 });
 	</script>
 	
 	
@@ -337,7 +343,7 @@
                   $('#save_avatar_button').removeClass('disabled');
                   }
                 });
-                
+  
       	});
   
   });
