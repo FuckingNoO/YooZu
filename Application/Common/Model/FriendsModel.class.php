@@ -12,8 +12,6 @@
 		array('status',0,self::MODEL_INSERT),
 	);
 		
-		
-		
 		//添加好友
 		public function addfriend($map=array(),$uid,$friendid){
 		   if($uid==$friendid){

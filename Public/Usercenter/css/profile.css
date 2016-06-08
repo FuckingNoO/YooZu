@@ -1,3 +1,6 @@
+body{
+	background-color: #36465d;
+}
 
 .userprofile-settings-list-group li{
 font-size: 25px;	
@@ -35,16 +38,78 @@ a:visited{
 text-decoration:none;
 }
 a:hover{
-text-decoration:none;
+text-decoration:no
 }
 a:active{
 text-decoration:none;
 }
 
-.panel{
-	border-radius: 25px;
-    padding: 20px;
+
+.weibo_user_avatar{
+	border-radius: 5px;
+	width: 90px;
+	
 }
+
+.weibo-content-panel{
+	border-radius: 10px;
+	
+}
+.profile_left_column{
+	margin-top: -170px;
+	
+}
+.weibo-content-panel{
+	padding: 20px;
+	padding-left: 0px;
+	padding-right: 0px;
+	border-radius: 10px;
+}
+
+.weibo-content-panel-body{
+	padding: 0px;
+}
+
+.weibo_title{
+	
+	font: "agency fb";
+	font-size: 20px;
+	margin-left: 10px;
+	color: #888888;
+	font-weight: 400;
+}
+
+.weibo-content-panel-heading{
+	padding: 0px;
+	
+}
+
+.weibo_ftContent{
+	margin-left: 10px;
+	
+}
+
+.user-profilecard{
+	
+	border-radius: 10px;
+	padding: 5px;
+	background-color: #36465d;
+	border: none;
+	
+}
+.user-profilecard-heading{
+	
+	border-radius: 10px;
+}
+
+.list-group-item{
+	background-color: #36465d;
+	border: none;
+	border-bottom: groove;
+	border-bottom-color: #3B3B3B;
+}
+
+ 
 
 
 

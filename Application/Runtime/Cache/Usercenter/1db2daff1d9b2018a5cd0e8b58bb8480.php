@@ -31,9 +31,10 @@
 <script type="text/javascript" src="/xiangmu/YooZu/Public/static/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="/xiangmu/YooZu/Public/static/jquery.iframe-transport.js" type="text/javascript"></script>
 <script type="text/javascript" src="/xiangmu/YooZu/Public/static/WebUIpopover/js/jquery.webui-popover.js"></script>
+<link rel="stylesheet" href="/xiangmu/YooZu/Public/static/w3.css"/>
 
 
-<!--
+<!---+-------------------------------------------------------------------------------------------------------------------------------------
 <script>
     //全局内容的定义
     var _ROOT_ = "/xiangmu/YooZu";
@@ -60,6 +61,7 @@
 	
  <nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="container-fluid">
+	  	<div class="row">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -68,17 +70,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><span class="fa fa-foursquare" aria-hidden="true" style="font-size: 60px; color: #00FFFF;"></span></a>
+      <a class="navbar-brand" href="#"><span class="fa fa-foursquare" aria-hidden="true" style="font-size: 60px; color: #00FFFF; margin-left: 20px;"></span></a>
     </div>
      
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">GO</button>
-      </form>
+        <div class="col-lg-6">
+            <div class="input-group" style="margin-top: 20px;">
+            	<input type="text" class="form-control input-lg" placeholder="Search for..." style="border-radius: 10px;">
+                <span class="input-group-btn">
+                <button class="btn btn-default btn-lg" type="button"><span class="fa fa-search">
+                </span></button>
+                </span>
+        </div><!-- /input-group -->
+    </div>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<?php echo U('Public/userfp',array('uid'=>get_uid()));?>"><span class="fa fa-university" aria-hidden="true" style="font-size: 60px;"></span></a></li>
         <li><a href="<?php echo U('Lease/lease',array('uid'=>get_uid()));?>"><span class="fa fa-bicycle" aria-hidden="trues" style="font-size: 60px;"></span></a></li>
@@ -91,6 +96,7 @@
       </ul>
         </div>
     </div>
+    </div>
     <!-- /.navbar-collapse -->
 </nav>
  
@@ -101,18 +107,23 @@
 		<div class="modal-dialog">
 		  <div class="modal-content">	
 			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<p class="text-muted" style="font-size: 30px; text-align: center;">hello,write something here!</p>
 			</div>
 			<div class="modal-body">
 				<form role="form">
                     <div class="form-group">
+                    	  <input type="text" class="form-control input-lg weibo-title-input" placeholder="写一个标题........" aria-describedby="basic-addon2" style="margin-bottom: 10px;">
                         <textarea name="content" class="form-control" rows="5" id="weibo_post_content" placeholder="发表些什么吧.........."></textarea>
-                     </div>
+                    </div>
                 </form>
               <!--显示图片的区域-->  
         <div id="uploadimg-div" style="display: none;">
-        	<div class="thumbnails">
+        	<div class="thumbnails w3-display-container">
         	    <img class="thumbnails" id="uploadweibo_image" style="width: 100%;"/>
+        	    <div class="w3-display-topright w3-container">
+        	      <a href="javascript:void(0);" class="weibo-img-delete-btn"><span class="fa fa-times" style="font-size: 30px;margin-top: 15px;"><span></a>
+        	    </div>	
         	</div>
         </div>        
 			</div>
@@ -126,6 +137,29 @@
 	    </div>
 	  </div> 
 	</div>
+	
+	<!--commentModal-->
+	<div class="fade modal" id="commentblock" tabindex="-1" role="dialog" aria-labelledby="mycommentModalLabel">
+	  <div class="modal-dialog">
+	      <div class="modal-content" style="padding: 0px;">
+	      	<div class="modal-header">
+	      		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	      		<h3><strong>给他/她写一些评论？</strong></h3>
+	      	</div>
+	      	<div class="modal-body" id="weibo_comment_list">
+	      		    
+	      	</div>
+	      	<div class="modal-footer" id="weibo_input_comment">
+	      		<div class="input-group">
+                <input type="text" class="form-control input-lg" id="comment-input-text" placeholder="写一些感言吧。。。。">
+                <span class="input-group-btn">
+                <button class="btn btn-primary btn-lg" id="comment-send-btn" type="button">发送</button>
+                </span>
+            </div>
+	      	</div>
+	      </div>
+    </div>	    
+	</div>
 	<!--Session block-->
 	<div id="sessionblock">
 		<div class="container-fluid">
@@ -133,8 +167,10 @@
 		    </div>
 		</div>
 	</div>
+	<!--Editor Modal-->
+	
 	<!--js block-->
-	<script>
+	<script type="text/javascript">
 $(function(){
 	
 	$('.navbar-chatting-model').webuiPopover({
@@ -154,6 +190,7 @@ $(function(){
 	 	    var postdata={
 	 		  content:$("#weibo_post_content").val(),
 	 		  attach_id:$('#uploadweibo_image').attr('attach_id'),
+	 		  title: $('.weibo-title-input').val(),
 	 	};
 	 		postweibo(Url,postdata);
 	 });
@@ -165,6 +202,7 @@ $(function(){
 //	 		handleAjax(result);
       alert(result.info);
 	 		$('#weibo_post_content').val('');
+	 		$('.weibo-title-input').val('');
 	 		setTimeout(function(){
 	 			$('#weibo_list').prepend(result.html);
 	 			$('#myWeibolist').prepend(result.html);
@@ -174,7 +212,33 @@ $(function(){
 	  $('#uploadweibo_image').attr('attach_id','');
 	 }
 	 
-	 });
+	 
+	    $('#comment-send-btn').on('click',function(){
+	    	
+	        var weiboid=$(this).parent().parent().parent().parent().parent().parent().attr('data-weibo-id');
+	        var commentcount=$(this).parent().parent().parent().parent().parent().parent().attr('data-weibo-comment-count');
+	 		    $.post('/xiangmu/YooZu/index.php/Usercenter/Editor/dosendComment',
+      			   {
+      				weibo_id: weiboid,
+      				content:$('#comment-input-text').val(),
+      			    },  
+      			    function(a){
+      				if(a.status){
+      					$('#comment-input-text').val('');
+      					$('#weibo_comment_list').prepend(a.html);
+      					$('#comment_count_'+weiboid).html(++commentcount);
+      					$('#commentblock').attr('data-weibo-comment-count',commentcount);
+      					alert(a.info);
+      				}	
+      			});
+	    });
+	    
+	  $('.weibo-img-delete-btn').on('click',function(){
+	        	$('#uploadweibo_image').attr('src');
+	        	$('#uploadimg-div').hide();
+	  });
+	     
+});
 	</script>
 	
 	

@@ -70,7 +70,7 @@
 			return $this->apiSuccess($message,array('recommendlist'=>arrayval($list)));
 		}
 		
-		public function sendWeibo($content, $type = 'feed', $feed_data = '', $from = '')
+		public function sendWeibo($content, $title,$type = 'feed', $feed_data = '', $from = '')
 		{
 			$this->requireLogin();
 			$this->requireSendInterval();
@@ -79,7 +79,7 @@
 			    $type="image";	
 			}
 			//write into database
-			$weibo_id=$this->weiboModel->addWeibo(get_uid(),$content,$type,$feed_data,$from);
+			$weibo_id=$this->weiboModel->addWeibo(get_uid(),$content,$title,$type,$feed_data,$from);
 			if(!$weibo_id){
 				throw new ApiException("failed send".$this->weiboModel->getError());
 			}
@@ -140,11 +140,14 @@
 			else return $this->apiSuccess('成功！',array());	
 		}
 		
-		public function deleteComment()
+		public function deleteComment($comment_id)
 		{
-			
-			
-			
+//			if(false==$this->canDeleteComment($comment_id)){
+//				throw new ApiException("你没有权限删除");
+//			}
+			$result=$this->weibocommentModel->deleteComment($comment_id);
+			if(!$result) return $this->apiReturn(0, '删除失败', array());
+			return $this->apiSuccess('删除成功!');
 		}
 		
 		//获取微博的架构
@@ -172,6 +175,7 @@
                 'user' => $this->getUserStructure($weibo['uid']),
                 'is_top' => $weibo['is_top'],
                 'uid' => $weibo['uid'],
+                'title'=>$weibo['title'],
                 'fetchContent' => $fetchContent,
                 'from' => $weibo['from']
             );
@@ -188,13 +192,17 @@
     {
         $comment = $this->weibocommentModel->find($id);
         $canDelete = $this->canDeleteComment($id);
-        return array(
+	    $fetchContent='<p class="text-muted">'.$comment['content'].'</p>';
+        $comment = array(
             'id' => intval($comment['id']),
+            'uid'=> $comment['uid'],
             'content' => strval($comment['content']),
             'create_time' => intval($comment['create_time']),
+            'fetchContent'=>$fetchContent,
             'can_delete' => boolval($canDelete),
-//          'user' => $this->getUserStructure($comment['uid']),
+            'user' => $this->getUserStructure($comment['uid']),
         );
+		return $comment;
     }
 
     public function getWeiboDetail($id)
@@ -223,7 +231,7 @@
 //      }
 
         //如果是自己发送的微博，可以删除微博
-        if ($weibo['uid'] == get_uid()){
+        if($weibo['uid'] == get_uid()){
             return true;
         }
 
@@ -235,9 +243,9 @@
 	private function canDeleteComment($comment_id)
     {
         //如果是管理员，则可以删除
-        if (is_administrator(get_uid())) {
-            return true;
-        }
+//      if (is_administrator(get_uid())) {
+//          return true;
+//      }
 
         //如果评论是自己发送的，则可以删除微博
         $comment = $this->weibocommentModel->find($comment_id);
@@ -246,7 +254,10 @@
         }
 
         //其他情况不能删除微博
-        return false;
+		else return false;
     }
+	
+	
+	
 }
 

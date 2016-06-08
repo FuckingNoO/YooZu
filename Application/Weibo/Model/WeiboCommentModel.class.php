@@ -15,6 +15,8 @@
         array('status', '1', self::MODEL_INSERT),
 		);
 		
+		
+		
 //		add comments
 		public function addComment($uid, $weibo_id, $content, $comment_id = 0)
 		{
@@ -32,14 +34,14 @@
             return $comment_id;	
 		}
 		
-		public function deleteComment()
+		public function deleteComment($comment_id)
 		{
 			//获取微博编号
-            $comment = D('Weibo/WeiboComment')->find($comment_id);
+            $comment =  D('Weibo/WeiboComment')->find($comment_id);
             $weibo_id = $comment['weibo_id'];
 
             //将评论标记为已经删除
-            D('Weibo/WeiboComment')->where(array('id' => $comment_id))->setField('status', -1);
+            D('Weibo/WeiboComment')->where(array('id' => $comment_id))->setField('status', '0');
 
             //减少微博的评论数量
             D('Weibo/Weibo')->where(array('id' => $weibo_id))->setDec('comment_count');

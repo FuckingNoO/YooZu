@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit();?><form action="/xiangmu/YooZu/index.php/Usercenter/Public/uploadImage" method="post" enctype="multipart/form-data" id="uploadimg-form">
+<?php if (!defined('THINK_PATH')) exit();?><form action="/xiangmu/YooZu/index.php/Usercenter/Editor/uploadImage" method="post" enctype="multipart/form-data" id="uploadimg-form">
 <p class="hide"><input type="file" name="image" class="weiboimg_input"/></p>
 </form>
 <a href="javascript:void(0);">

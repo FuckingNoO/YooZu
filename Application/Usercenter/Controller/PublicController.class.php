@@ -33,7 +33,7 @@ class PublicController extends Controller {
 	}
   }
 	
-    public function accept_weibo($content,$attach_id='',$type="feed",$map=array()) 
+    public function accept_weibo($content,$attach_id='',$title,$type="feed",$map=array()) 
 	{
 		if($attach_id){
 			$picture=M('picture');
@@ -46,7 +46,7 @@ class PublicController extends Controller {
 		$feed_data='';
         $feed_data['attach_id']=$attach_id;
         
-		$result=$this->weiboApi->sendWeibo($content,$type,$feed_data);
+		$result=$this->weiboApi->sendWeibo($content,$title,$type,$feed_data);
 		$weibo=$this->weiboApi->getWeiboDetail($result['weibo_id']);
 		$result['html'] = R('WeiboDetail/weibo_html', array('weibo' => $weibo['weibo']), 'Widget');
 
@@ -80,9 +80,8 @@ class PublicController extends Controller {
 	{
 		if($uid=get_uid()){
 			$result=$this->weiboApi->sendComment(array(),$uid,$weibo_id,$content,$comment_id);
-			$comment=$this->weiboApi->getCommentStructure($result['comment']['id']);
 		}	
-		$result['html']=R('Comment/comment_html',array('comment'=>$comment),'Widget');
+		$result['html']=R('Comment/comment_html',array('comment'=>$result['comment']),'Widget');
 		$this->ajaxReturn(apiToAjax($result));
 	}
 	
@@ -105,8 +104,10 @@ class PublicController extends Controller {
 	
 	//验证是否可以删除评论
 	public function dodeleteComment($commentid){
-	
-      //	$this->weiboApi->  ;/////////////////////TODO
+		
+	    $result=$this->weiboApi->deleteComment($commentid);
+		$this->ajaxReturn(apiToAjax($result));
+          
 	}
 	
 	public function dosupport($weiboid,$uid=0){

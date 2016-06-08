@@ -1,18 +1,27 @@
-<div id="comment_{$commentId}">
-	<div class="container">
-		<div class="row">
-			<div id="comment-user-avadar" class="pull-left">
-				<a href="javascript:void(0)" id="avadar_{$commentId}">
-					<img src="" alt="user avadar" />
-				</a>
-			</div>
-			<div id="comment-user-content" class="pull-right">
-				{$content}
-			</div>
-	    </div>
-	</div>
-</div>
-<script>
-//javascript
+<li class="w3-padding-16" id="comment_{$comment.id}" style="height: auto;">
+    <if condition="$comment.can_delete eq 1">
+    <span id="comment_delete_btn_{$comment.id}" class="w3-closebtn w3-padding w3-margin-right w3-medium"><span class="fa fa-times" aria-hidden="true"></span></span>
+    </if>
+    <img src="{$comment.user.avatar128}" class="w3-left w3-circle w3-margin-right" style="width:60px">
+    <span class="w3-xlarge">Mike</span><br>
+    <span>{$comment.content}</span>
+</li>    
+    
+    
+    <script type="text/javascript">
+     $('#comment_delete_btn_{$comment.id}').on('click',function(){
+     	$(this).parent().css('display','none');
+     	var count=$(this).parent().parent().parent().parent().parent().parent().attr('data-weibo-comment-count');
+     	var weiboid=$(this).parent().parent().parent().parent().parent().parent().attr('data-weibo-id');
+     	var url="__URL__/dodeleteComment";
+   	    $.post(url,{commentid:{$comment.id}},function(a){
+   	  	    if(a.status==1){
+   	  	    	$('#comment_count_'+weiboid).html(count--);
+   	  	        alert(a.info);
+   	  	    } 
+   	 });
+     	
+});
 </script>
+
 

@@ -1,20 +1,23 @@
-
-			.container{
-				margin-top: 80px;
+body{
+    background-color: #36465d;
+}		
+			
+.container{
+margin-top: 80px;
 				
+}
+li{
+font-size: 30px;
+font-weight: 800;
+}
+footer li{
+	display: inline;
+	}
+p{
+ font-size: 15px;
+color: #696854;
 			}
-			li{
-				font-size: 30px;
-				font-weight: 800;
-			}
-			footer li{
-				display: inline;
-			}
-			p{
-				font-size: 15px;
-				color: #696854;
-			}
-			.panel{
-			    border-radius: 25px;
-                padding: 20px;
+.panel{
+    border-radius: 25px;
+    padding: 20px;
 			}

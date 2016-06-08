@@ -3,18 +3,18 @@
 <?php $url=U('Public/profilecard',array('weibo'=>$weibo)); ?>
     <div class="col-md-2 col-sm-2 col-xs-12 text-center" style="position: relative;">
     	<a href="javascript:void(0);" id="user_avatar_<?php echo ($weibo["id"]); ?>">
-    		<img src="<?php echo ($weibo["user"]["avatar128"]); ?>" class="weibo_user_avatar"/>
+    		<img src="<?php echo ($weibo["user"]["avatar128"]); ?>" class="weibo_user_avatar w3-hover-opacity"/>
     	</a>
     </div> 
 <!--Content-->
     <div class="col-md-10 col-sm-10 col-xs-12 panel panel-default weibo-content-panel" id="weibo_content_list">
     	<div class="panel-heading weibo-content-panel-heading">
-    		<p class="weibo_title" id="weibo_title_<?php echo ($weibo["id"]); ?>">斑马斑马</p>
+    		<p class="weibo_title" id="weibo_title_<?php echo ($weibo["id"]); ?>"><?php echo ($weibo["title"]); ?></p>
     	</div>
     	
     	<div class="panel-body weibo-content-panel-body">
-    			<a href="javascript:void(0);"><img src="<?php echo ($weibo["imgurl"]); ?>" width="100%" height="100%" 
-    			<?php if($weibo["imgurl"] == null): ?>style="display :none;"<?php endif; ?>/></a>
+    		<a href="javascript:void(0);" id="weibo_attach_img_<?php echo ($weibo["id"]); ?>"><img src="<?php echo ($weibo["imgurl"]); ?>" class="w3-hover-opacity" width="100%" height="100%" 
+    		onclick="document.getElementById('moda_<?php echo ($weibo["id"]); ?>').style.display='block'" <?php if($weibo["imgurl"] == null): ?>style="display :none;"<?php endif; ?>/></a>
     		<div class="weibo_ftContent"><?php echo ($weibo["fetchContent"]); ?></div>
     	</div>
     	<div class="panel-footer">
@@ -30,7 +30,7 @@
   </ul>
   <script>
   	$('#weibo_delete_'+'<?php echo ($weibo["id"]); ?>').click(function(){
-    	$.post('/xiangmu/YooZu/index.php/Usercenter/Public/dodeleteWeibo',{weiboid:'<?php echo ($weibo["id"]); ?>'},function(result){
+    	$.post('/xiangmu/YooZu/index.php/Usercenter/Profile/dodeleteWeibo',{weiboid:'<?php echo ($weibo["id"]); ?>'},function(result){
     		if(result.status==1){
     			alert(result.info);
     			$('#weibo_'+'<?php echo ($weibo["id"]); ?>').empty();
@@ -46,6 +46,11 @@
     	  </div>
     	</div>
     </div>
+        <div id="moda_<?php echo ($weibo["id"]); ?>" class="w3-modal w3-animate-zoom" onclick="this.style.display='none'">
+            <div class="w3-modal-content w3-animate-zoom">
+                <img src="<?php echo ($weibo["imgurl"]); ?>" style="width:100%;height:100%;">
+            </div>
+        </div>
 </div>
 <!--JS-->
      <script type="text/javascript">
@@ -62,8 +67,10 @@
                 animation:'pop',
                 arrow:false,
                 multi:true,
-                width:400,
                 padding:false,
+                width: 350,
+//              height:480,
 			   });
+			     
 			});
 	</script>

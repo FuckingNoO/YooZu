@@ -31,9 +31,10 @@
 <script type="text/javascript" src="/xiangmu/YooZu/Public/static/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="/xiangmu/YooZu/Public/static/jquery.iframe-transport.js" type="text/javascript"></script>
 <script type="text/javascript" src="/xiangmu/YooZu/Public/static/WebUIpopover/js/jquery.webui-popover.js"></script>
+<link rel="stylesheet" href="/xiangmu/YooZu/Public/static/w3.css"/>
 
 
-<!--
+<!---+-------------------------------------------------------------------------------------------------------------------------------------
 <script>
     //全局内容的定义
     var _ROOT_ = "/xiangmu/YooZu";
@@ -103,7 +104,7 @@
                    <a href="javascript:void(0)" class="pull-left" id="refresh_captcha">看不清？</a>
         	</form>	
         </div>
-            <footer class="footer">
+        <!--    <footer class="footer">
       <div class="container">	
            <div class="row">
            	<div class="col-md-3">
@@ -140,7 +141,7 @@
            </div>
       </div>
     </footer>
-
+-->
         <script>
 	$(document).ready(function(){ 
 		$("#login_btn").click(function(){

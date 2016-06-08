@@ -1,3 +1,5 @@
 <volist name="comment_list" id="comment">
-   {:W('Comment/comment_detail',array('comment'=>$comment))}
+   <ul class="w3-ul w3-card-4 comment-lists-group">
+   	{:W('Comment/comment_detail',array('comment'=>$comment))}
+   </ul>
 </volist>

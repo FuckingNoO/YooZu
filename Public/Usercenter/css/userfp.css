@@ -3,6 +3,9 @@ padding-top: 70px;
 
 background-color: #36465d;
 }
+ul{
+	list-style-type: none;
+}
 
 .container{
 	
@@ -81,7 +84,6 @@ text-decoration:none;
 	padding: 0px;
 	color: #888888;
 	font-weight: 700;
-	
 }
 
 .weeklytalk-panel img{
@@ -105,16 +107,22 @@ text-decoration:none;
 }
 
 .weeklytalk-option-div span{
-	font-size: 30px;
+	font-size: 25px;
 	color: #808080;
-	margin-top: 0;
-	margin-left: 60px;
-	margin-right: 60px;
+	margin-top: -3px;
+	margin-right: 10px;
 }
+
+.weeklytalk-option-div p{
+	color: #808080;
+	
+	
+}
+
 
 .weibo_user_avatar {
 	width: 90px; 
-	border-radius: 10px;
+	border-radius: 6px;
 }
 
 .weibo-content-panel{
@@ -145,6 +153,14 @@ text-decoration:none;
 	margin-left: 10px;
 	
 }
+
+.fa-times{
+	font-size: 20px;
+    color: #ADADAD;	
+	
+}
+
+
 
     	
     	
